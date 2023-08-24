@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-
+from .items import get_items
 from .models import db
 
 app = Flask("dice")

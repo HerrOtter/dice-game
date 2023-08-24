@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: Dice Game
+  
+  license:
+    name: MIT
+    
+paths:
+   # auth
+   /api/login:
+     post:
+       tags:
+        - auth
+       summary: API login endpoint
+       responses:
+         "200":
+           description: "Successful login"
+         "400":
+           description: "Login failed"
+           
+           
+   /api/register:
+     post:
+       tags:
+        - auth
+       summary: API registration endpoint
+       responses:
+         "200":
+           description: "Successful registration"
+         "400":
+           description: "Registration failed"
+           
+   # user
+   /api/user:
+     get:
+       tags:
+         - user
+       responses:
+         "200":
+           description: "Return current user info"
+         "401":
+           description: "Not authenticated"
+
+       
+   # game
+   /api/dice/guess:
+     post:
+       tags:
+         - game
+       summary: Guess the number for the current game and receive feedback
+       responses:
+         "200":
+           description: "Successful registration"
+         "401":
+           description: "Not authenticated"
+
+   /api/dice/info:
+     get:
+       tags:
+         - game
+       summary: Get basic infos about previous games
+       responses:
+         "200":
+           description: "Game list returned"
+         "401":
+           description: "Not authenticated"
+
+   /api/dice/info/{gameId}:
+     get:
+       tags:
+         - game
+       summary: Get info about a previous game
+       parameters:
+        - name: gameId
+          in: path
+          description: ID of the game
+          required: true
+          schema:
+            type: integer
+            format: int64
+       responses:
+         "200":
+           description: "Game info returned"
+         "404":
+           description: "Game was not found or is inaccessible"
+         "401":
+           description: "Not authenticated"
+
+   /api/dice/scoreboard:
+     get:
+       tags:
+         - game
+       responses:
+         "200":
+           description: "Returns global point scoreboard"
+
+   # shop
+   /api/shop/list:
+     get:
+       tags:
+         - shop
+       summary: List all items in the shop with basic infos
+       responses:
+         "200":
+           description: "Item list returned"
+         "401":
+           description: "Not authenticated"
+           
+   /api/shop/list/{itemId}:
+     get:
+       tags:
+         - shop
+       summary: List Information about a specific item
+       parameters:
+        - name: itemId
+          in: path
+          description: ID of an item
+          required: true
+          schema:
+            type: integer
+            format: int64
+       responses:
+         "200":
+           description: "Item info returned"
+         "401":
+           description: "Not authenticated"
+
+   /api/shop/buy/{itemId}:
+     post:
+       tags:
+         - shop
+       summary: Attempt to buy an item
+       parameters:
+        - name: itemId
+          in: path
+          description: ID of an item
+          required: true
+          schema:
+            type: integer
+            format: int64
+       responses:
+         "200":
+           description: "Item bought"
+         "403":
+           description: "Item could not be bought"
+         "401":
+           description: "Not authenticated"

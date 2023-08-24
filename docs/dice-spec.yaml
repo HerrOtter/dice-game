@@ -73,6 +73,8 @@ paths:
        responses:
          "200":
            description: "Game list returned"
+         "404":
+           description: "Game was not found or is inaccessible"
          "401":
            description: "Not authenticated"
 

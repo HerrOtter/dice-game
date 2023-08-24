@@ -4,8 +4,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy.exc import IntegrityError
 
 from .items import get_items
-from .models import db, User
-from .utils import get_current_user, is_authenticated
+from .models import db, User, Game
+from .utils import get_current_user, is_authenticated, get_active_game
 
 app = Flask("dice")
 
@@ -19,7 +19,6 @@ with app.app_context():
 @app.route("/", methods=["GET", "POST"])
 def index():
     if not is_authenticated():
-        print("NOT LOGGED IN")
         return render_template("auth.html")
 
     return {}
@@ -34,6 +33,7 @@ def api_login():
         return {
             "status": "login_success",
         }, 200
+
 
     try:
         username = request.form["username"]
@@ -50,16 +50,15 @@ def api_login():
         }, 400
 
 
-    user = db.session.execute(db.select(User).filter_by(username=username)).first()
+    users = db.session.execute(db.select(User).filter_by(username=username)).first()
 
-    if not user or not user.User.check_password(password):
+    if not users or not users[0].check_password(password):
         return {
             "error": "invalid_credentials",
         }, 400
 
-    user_entity = user.User
-
-    session["user"] = user_entity.id
+    user = users[0]
+    session["user"] = user.id
 
     return {
         "status": "login_success",
@@ -84,7 +83,6 @@ def api_register():
 
     user = User(username=request.form["username"])
     user.set_password(request.form["password"])
-    print(user.password)
 
     db.session.add(user)
     try:
@@ -113,8 +111,6 @@ def api_logout():
 @app.route("/api/user", methods=["GET"])
 def api_user():
     user = get_current_user()
-
-    print(user)
     if not user:
         return {
             "error": "not_authenticated"
@@ -127,12 +123,45 @@ def api_user():
 
 @app.route("/api/dice/guess", methods=["POST"])
 def api_dice_guess():
+    print(get_active_game())
     return {}
 
-@app.route("/api/dice/info", defaults={"game_id": None}, methods=["POST"])
-@app.route("/api/dice/info/<int:game_id>", methods=["POST"])
+@app.route("/api/dice/info", defaults={"game_id": None}, methods=["GET"])
+@app.route("/api/dice/info/<int:game_id>", methods=["GET"])
 def api_dice_info(game_id: Optional[int]):
-    return {}
+    user = get_current_user()
+    if not user:
+        return {
+            "error": "not_authenticated"
+        }, 401
+
+    games = []
+    if not game_id:
+        game_list = user.games
+    else:
+        specific_game = db.session.get(Game, game_id)
+        if (not specific_game or
+            specific_game.user != user or
+            not specific_game.complete):
+            return {
+                "error": "not_found"
+            }, 404
+        game_list = [specific_game]
+
+
+    for game in game_list:
+        if not game.complete:
+            continue
+
+        games.append({
+            "id": game.id,
+            "guesses": game.guesses,
+            "value": game.value,
+        })
+
+    if game_id:
+        return games[0]
+    return games
 
 @app.route("/api/dice/scoreboard", methods=["GET"])
 def api_dice_scoreboard():

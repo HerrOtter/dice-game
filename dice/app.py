@@ -59,6 +59,7 @@ def api_login():
 
     user = users[0]
     session["user"] = user.id
+    app.logger.info('%s logged in successfully', user.username)
 
     return {
         "status": "login_success",
@@ -67,6 +68,12 @@ def api_login():
 
 @app.route("/api/register", methods=["POST"])
 def api_register():
+    if is_authenticated():
+        # We are logged in, why register again?
+        return {
+            "error": "logged_in",
+        }, 404
+
     try:
         username = request.form["username"]
     except KeyError:
@@ -92,6 +99,7 @@ def api_register():
             "error": "username_exists",
         }, 400
 
+    app.logger.info('%s registered as a new account', user.username)
     session["user"] = user.id
 
     return {

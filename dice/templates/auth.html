@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="de">
+{% extends 'base.html' %}
+{% block title %}try your luck{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>!Dice - Triffst du die Zahl</title>
-    <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
-<body>
+{% block body %}
     <header>
         <h1>Ratespiel</h1>
     </header>
 
     <div class="wrapper">
         <section>
-            <h2>Don't have an account</h2>
-            <form class="registration-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <button class="register" type="submit">Register</button>
-            </form>
-        </section>
-
-        <section>
-            <h2>Hop in and play</h2>
+            <h2>Login</h2>
             <form class="login-form">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -40,11 +19,22 @@
                 <button type="submit">Login</button>
             </form>
         </section>
+
+        <section>
+            <h2>Register</h2>
+            <form class="registration-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button class="register" type="submit">Register</button>
+            </form>
+        </section>
     </div>
 
     <footer>
         <button class="settings-button"><i class="fas fa-cog"></i></button>
     </footer>
-</body>
-
-
+{% endblock %}

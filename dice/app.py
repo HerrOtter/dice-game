@@ -4,8 +4,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy.exc import IntegrityError
 
 from .items import get_items
-from .models import db
-from .models import User
+from .models import db, User
+from .utils import get_current_user, is_authenticated
 
 app = Flask("dice")
 
@@ -18,19 +18,23 @@ with app.app_context():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == "POST":
-        return redirect(url_for("register"))
-    return render_template("index.html")
+    if not is_authenticated():
+        print("NOT LOGGED IN")
+        return render_template("auth.html")
 
-@app.route("/register", methods=["GET" , "POST"])
-def register():
-    return render_template("register.html")
+    return {}
 
 ### API
 # Todo put into its own file
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
+    if is_authenticated():
+        # We are already authenticated, what are we doing?
+        return {
+            "status": "login_success",
+        }, 200
+
     username = request.form.get("username", None)
     password = request.form.get("password", None)
 
@@ -40,17 +44,20 @@ def api_login():
     if not password:
         return "Pass Error"
 
-    user = db.one_or_404(
-        db.select(User).filter_by(username=username),
-        description="Invalid credentials"
-    )
+    user = db.session.execute(db.select(User).filter_by(username=username)).first()
 
-    if not user.check_password(password):
-        return "Wrong password"
+    if not user or not user.User.check_password(password):
+        return {
+            "error": "invalid_credentials",
+        }, 400
 
-    session["user"] = user.id
+    user_entity = user.User
 
-    return f"Logged in as {user.username}"
+    session["user"] = user_entity.id
+
+    return {
+        "status": "login_success",
+    }
 
 
 @app.route("/api/register", methods=["POST"])
@@ -59,10 +66,14 @@ def api_register():
     password = request.form.get("password", None)
 
     if not username:
-        return "Username Error"
+        return {
+            "error": "form_missing_field",
+        }, 400
 
     if not password:
-        return "Pass Error"
+        return {
+            "error": "form_missing_field",
+        }, 400
 
     user = User(username=request.form["username"])
     user.set_password(request.form["password"])
@@ -72,22 +83,37 @@ def api_register():
     try:
         db.session.commit()
     except IntegrityError:
-        return "User exist"
-    return {}
+        return {
+            "error": "username_exists",
+        }, 400
+    return {
+        "status": "register_success"
+    }
 
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
-    del session["user"]
-    return {}
+    try:
+        del session["user"]
+    except KeyError:
+        pass
+    return {
+        "status": "logout_success"
+    }
 
 @app.route("/api/user", methods=["GET"])
 def api_user():
-    try:
-        user = db.get_or_404(User, session["user"])
-        return user.username
-    except:
-        pass
-    return {}
+    user = get_current_user()
+
+    print(user)
+    if not user:
+        return {
+            "error": "not_authenticated"
+        }, 401
+
+    return {
+        "username": user.username,
+        "points": user.points
+    }
 
 @app.route("/api/dice/guess", methods=["POST"])
 def api_dice_guess():

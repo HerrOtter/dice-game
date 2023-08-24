@@ -26,6 +26,9 @@ class User(db.Model):
     games = db.relationship("Game", viewonly=True)
     items = db.relationship("UserItems", viewonly=True)
 
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} {self.username}>"
+
     def hash_password(self, password: str) -> str:
         if self.hash_type is None:
             self.hash_type = DEFAULT_HASH_INDEX

@@ -35,14 +35,20 @@ def api_login():
             "status": "login_success",
         }, 200
 
-    username = request.form.get("username", None)
-    password = request.form.get("password", None)
+    try:
+        username = request.form["username"]
+    except KeyError:
+        return {
+            "error": "form_missing_field_username",
+        }, 400
 
-    if not username:
-        return "Username Error"
+    try:
+        password = request.form["password"]
+    except KeyError:
+        return {
+            "error": "form_missing_field_password",
+        }, 400
 
-    if not password:
-        return "Pass Error"
 
     user = db.session.execute(db.select(User).filter_by(username=username)).first()
 
@@ -62,17 +68,18 @@ def api_login():
 
 @app.route("/api/register", methods=["POST"])
 def api_register():
-    username = request.form.get("username", None)
-    password = request.form.get("password", None)
-
-    if not username:
+    try:
+        username = request.form["username"]
+    except KeyError:
         return {
-            "error": "form_missing_field",
+            "error": "form_missing_field_username",
         }, 400
 
-    if not password:
+    try:
+        password = request.form["password"]
+    except KeyError:
         return {
-            "error": "form_missing_field",
+            "error": "form_missing_field_password",
         }, 400
 
     user = User(username=request.form["username"])
@@ -86,6 +93,9 @@ def api_register():
         return {
             "error": "username_exists",
         }, 400
+
+    session["user"] = user.id
+
     return {
         "status": "register_success"
     }

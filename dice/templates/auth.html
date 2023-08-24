@@ -6,10 +6,38 @@
         <h1>Ratespiel</h1>
     </header>
 
+    <script>
+        async function submitForm(event) {
+            // stop form submission
+            event.preventDefault();
+
+            var form = event.target;
+            var url = form.action;
+
+            const formData = new FormData(form);
+            console.log(formData);
+            const response = await fetch(url, {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json()
+            if ("error" in data)
+            {
+                console.error(data)
+            }
+            else
+            {
+                console.info(data);
+                window.location.reload();
+            }
+        }
+    </script>
+
     <div class="wrapper">
         <section>
             <h2>Login</h2>
-            <form class="login-form">
+            <form id="login-form" action="{{ url_for('api_login') }}">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                                 
@@ -19,10 +47,14 @@
                 <button type="submit">Login</button>
             </form>
         </section>
+        <script>
+            const login_form = document.getElementById("login-form");
+            login_form.addEventListener('submit', submitForm);
+        </script>
 
         <section>
             <h2>Register</h2>
-            <form class="registration-form">
+            <form id="registration-form" action="{{ url_for('api_register') }}">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                                 
@@ -32,6 +64,11 @@
                 <button class="register" type="submit">Register</button>
             </form>
         </section>
+        <script>
+            const signup_form = document.getElementById("registration-form");
+            signup_form.addEventListener('submit', submitForm);
+        </script>
+
     </div>
 
     <footer>

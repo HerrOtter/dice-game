@@ -62,7 +62,7 @@ class Game(db.Model):
     def generate_value(self):
         self.value = randint(0, 100)
 
-    def check_guess(self, guess: int): bool
+    def check_guess(self, guess: int) -> bool:
         if self.complete:
             return False
 
@@ -70,6 +70,6 @@ class Game(db.Model):
             return False
 
         self.guesses += 1
-        if self.value = guess:
+        if self.value == guess:
             self.complete = True
             self.user.add_points(COMPLETED_POINTS)

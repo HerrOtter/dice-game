@@ -19,22 +19,22 @@ class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
-    passwort = db.Column(db.String)
+    password = db.Column(db.String)
     hash_type = db.Column(db.Integer)
-    points = db.Column(db.Integer)
+    points = db.Column(db.Integer, default=0)
 
-    games = db.relationship("Game")
-    items = db.relationship("UserItems")
+    games = db.relationship("Game", viewonly=True)
+    items = db.relationship("UserItems", viewonly=True)
 
     def hash_password(self, password: str) -> str:
         if self.hash_type is None:
-            self.hash_type = DEFAULT_HASH
+            self.hash_type = DEFAULT_HASH_INDEX
 
         return HASH_FUNCTIONS[self.hash_type](password, self.username)
 
     def set_password(self, password: str, upgrade: bool = True):
         if upgrade:
-            self.hash_type = DEFAULT_HASH
+            self.hash_type = DEFAULT_HASH_INDEX
         self.password = self.hash_password(password)
 
     def check_password(self, password: str) -> bool:

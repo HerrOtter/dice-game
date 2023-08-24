@@ -31,11 +31,21 @@ paths:
          "400":
            description: "Registration failed"
            
+   /api/logout:
+     post:
+       tags:
+        - auth
+       summary: API logout endpoint
+       responses:
+         "200":
+           description: "Logout successful or not logged in"
+           
    # user
    /api/user:
      get:
        tags:
          - user
+       summary: Get info about the current user
        responses:
          "200":
            description: "Return current user info"
@@ -91,9 +101,10 @@ paths:
      get:
        tags:
          - game
+       summary: "Get global scoreboard"
        responses:
          "200":
-           description: "Returns global point scoreboard"
+           description: "Global scoreboard was returned"
 
    # shop
    /api/shop/list:

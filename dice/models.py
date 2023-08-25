@@ -55,8 +55,8 @@ class UserItems(db.Model):
 class Game(db.Model):
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
-    guesses = db.Column(db.Integer)
-    complete = db.Column(db.Boolean)
+    guesses = db.Column(db.Integer, default=0)
+    complete = db.Column(db.Boolean, default=False)
     value = db.Column(db.Integer)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -65,14 +65,28 @@ class Game(db.Model):
     def generate_value(self):
         self.value = randint(0, 100)
 
-    def check_guess(self, guess: int) -> bool:
-        if self.complete:
-            return False
+    def check_guess(self, guess: int) -> int:
+        """
+        Returns:
+          1 when guess is too big
+          0 when guess is correct
+         -1 when guess is too small
 
-        if guess < 0 or guess > 100:
-            return False
+        Invalid guesses are not counted
+        """
+        if self.complete:
+            return 0
+        elif guess < 0:
+            return -1
+        elif guess > 100:
+            return 1
 
         self.guesses += 1
         if self.value == guess:
             self.complete = True
             self.user.add_points(COMPLETED_POINTS)
+            return 0
+        elif self.value < guess:
+            return 1
+        elif self.value > guess:
+            return -1

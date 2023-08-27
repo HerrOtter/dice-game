@@ -1,3 +1,9 @@
+# web framework
 flask
+# ORM
 SQLAlchemy
+# ORM integration
 Flask-SQLAlchemy
+# admin interface
+Flask-Admin
+

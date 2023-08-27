@@ -3,15 +3,22 @@ from typing import Optional
 from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy.exc import IntegrityError
 
+from .admin import admin
 from .items import get_items
 from .models import db, User, Game
 from .utils import get_current_user, is_authenticated, get_active_game, new_game
 
 app = Flask("dice")
 
+# Flask-SQLalchemy
 app.secret_key = 'SECRET_DICE'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///dice.db"
 db.init_app(app)
+
+# Flask-Admin
+# https://bootswatch.com/3/
+app.config['FLASK_ADMIN_SWATCH'] = 'yeti'
+admin.init_app(app)
 
 with app.app_context():
     db.create_all()

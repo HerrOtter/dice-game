@@ -1,0 +1,47 @@
+{% extends 'admin/master.html' %}
+
+{% block page_body %}
+    <div class="container{% if config.get('FLASK_ADMIN_FLUID_LAYOUT', False) %}-fluid{% endif %}">
+
+        {% block title_text %}
+            <h1 class="text-center">
+                !Dice Setup
+            </h1>
+        {% endblock %}
+
+        {% block messages %}
+            {{ layout.messages() }}
+        {% endblock %}
+
+        {# store the jinja2 context for form_rules rendering logic #}
+        {% set render_ctx = h.resolve_ctx() %}
+
+        {% block body %}
+
+            <form method="POST" role="form" class="admin-form" enctype="multipart/form-data">
+
+                <h3>
+                    Create Admin User
+                </h3><br>
+
+                <label>
+                    <div class="form-group">
+                       <label for="username" class="control-label">Username<strong style="color: red">*</strong></label>
+                       <input class="form-control" id="username" name="username" required type="text">
+                    </div>
+
+                    <div class="form-group">
+                       <label for="password" class="control-label">Password<strong style="color: red">*</strong></label>
+                       <input class="form-control" id="password" name="password" required type="password">
+                    </div>
+
+                    <div class="form-group">
+                       <label for="password_again" class="control-label">Repeat password<strong style="color: red">*</strong></label>
+                       <input class="form-control" id="password_again" name="password_again" required type="password">
+                    </div>
+                <input type="submit" class="btn btn-primary" value="{{ _gettext('Save') }}" />
+            </form>
+        {% endblock %}
+    </div>
+{% endblock %}
+

@@ -18,10 +18,11 @@ DEFAULT_HASH_INDEX = 0
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
-    hash_type = db.Column(db.Integer)
-    points = db.Column(db.Integer, default=0)
+    username = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    hash_type = db.Column(db.Integer, nullable=False)
+    points = db.Column(db.Integer, default=0, nullable=False)
+    admin = db.Column(db.Boolean, default=False, nullable=False)
 
     games = db.relationship("Game", viewonly=True)
     items = db.relationship("UserItems", viewonly=True)
@@ -55,11 +56,11 @@ class UserItems(db.Model):
 class Game(db.Model):
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
-    guesses = db.Column(db.Integer, default=0)
-    complete = db.Column(db.Boolean, default=False)
-    value = db.Column(db.Integer)
+    guesses = db.Column(db.Integer, default=0, nullable=False)
+    complete = db.Column(db.Boolean, default=False, nullable=False)
+    value = db.Column(db.Integer, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)
 
     def generate_value(self):

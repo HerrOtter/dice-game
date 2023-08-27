@@ -1,7 +1,5 @@
-from abc import ABC, abstractmethod
-from typing import Union, Optional, List
-
-from ..models import User, Game
+from abc import ABC
+from typing import List
 
 class BaseItem(ABC):
     name: str

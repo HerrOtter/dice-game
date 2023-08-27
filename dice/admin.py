@@ -1,9 +1,6 @@
-import enum
-
 from flask import request, url_for, redirect, flash
 from flask_admin import Admin, AdminIndexView, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
-from sqlalchemy import Enum
 from sqlalchemy.exc import IntegrityError
 
 from .models import db, User, Game
@@ -42,7 +39,7 @@ class SetupView(BaseView):
 
         # We found a setup entry in the database, prevent setups from occuring
         if db.session.execute(db.select(SetupTable)).first():
-            setup_complete = True
+            self.setup_complete = True
             return False
 
         return True
@@ -67,7 +64,7 @@ class SetupView(BaseView):
                     except IntegrityError:
                         flash("Username already exists", "error")
 
-                    setup_complete = True
+                    self.setup_complete = True
 
                     done = SetupTable()
                     db.session.add(done)

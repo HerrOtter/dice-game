@@ -40,7 +40,9 @@ def get_active_game() -> Optional[Game]:
     if not user_id:
         return None
 
-    active_game = db.session.execute(db.select(Game).filter_by(user_id=user_id, complete=0)).first()
+    active_game = db.session.execute(
+            db.select(Game).filter_by(user_id=user_id, complete=0)
+        ).first()
     if not active_game:
         return None
     return active_game[0]

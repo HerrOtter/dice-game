@@ -1,10 +1,9 @@
 from typing import Optional
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, session
 from sqlalchemy.exc import IntegrityError
 
 from .admin import admin
-from .items import get_items
 from .models import db, User, Game
 from .utils import get_current_user, is_authenticated, get_active_game, new_game
 
@@ -57,7 +56,9 @@ def api_login():
         }, 400
 
 
-    users = db.session.execute(db.select(User).filter_by(username=username)).first()
+    users = db.session.execute(
+            db.select(User).filter_by(username=username)
+        ).first()
 
     if not users or not users[0].check_password(password):
         return {
@@ -66,7 +67,7 @@ def api_login():
 
     user = users[0]
     session["user"] = user.id
-    app.logger.info('%s logged in successfully', user.username)
+    app.logger.info(f"{user.username} logged in successfully")
 
     return {
         "status": "login_success",
@@ -95,8 +96,8 @@ def api_register():
             "error": "form_missing_field_password",
         }, 400
 
-    user = User(username=request.form["username"])
-    user.set_password(request.form["password"])
+    user = User(username=username)
+    user.set_password(password)
 
     db.session.add(user)
     try:

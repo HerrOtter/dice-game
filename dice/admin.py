@@ -37,8 +37,9 @@ class SetupView(BaseView):
         if self.setup_complete:
             return False
 
-        # We found a setup entry in the database, prevent setups from occuring
         if db.session.execute(db.select(SetupTable)).first():
+            # We found a database flag to declare setup was already completed
+            # mark this to prevent future database lookups
             self.setup_complete = True
             return False
 
@@ -60,21 +61,25 @@ class SetupView(BaseView):
                     db.session.add(user)
                     try:
                         db.session.commit()
+
+                        # Mark completion locally
+                        self.setup_complete = True
+
+                        # Try to store completion in database
+                        done = SetupTable()
+                        db.session.add(done)
+                        db.session.commit()
+
+                        return redirect(url_for("index"))
+
                     except IntegrityError:
                         flash("Username already exists", "error")
-
-                    self.setup_complete = True
-
-                    done = SetupTable()
-                    db.session.add(done)
-                    db.session.commit()
-                    return redirect(url_for("index"))
                 else:
                     flash("Repeated password does not match", "error")
             else:
                 flash("Form value is missing", "error")
 
-        return self.render("admin/setup.html", messages=["bla"])
+        return self.render("admin/setup.html")
 
 class DiceView(AuthModelView):
     column_exclude_list = ["password"]
@@ -92,4 +97,4 @@ admin = Admin(name="!dice", index_view=AuthIndexView(), template_mode="bootstrap
 
 admin.add_view(DiceView(User, db.session))
 admin.add_view(GameView(Game, db.session))
-admin.add_view(SetupView(name="setup", endpoint="setup"))
+admin.add_view(SetupView(name="Setup", endpoint="setup"))

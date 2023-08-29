@@ -1,10 +1,9 @@
 from typing import Optional
 
-from flask import session
 from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
-from .models import db, User, Game
+from .models import db, Game
 
 def is_admin() -> bool:
     if not current_user.is_authenticated:

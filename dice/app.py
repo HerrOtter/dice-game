@@ -62,6 +62,10 @@ def api_login():
             "error": "form_missing_field_password",
         }, 400
 
+    if (len(username) < 3):
+        return {
+            "error": "username"
+        }, 400
 
     users = db.session.execute(
             db.select(User).filter_by(username=username)

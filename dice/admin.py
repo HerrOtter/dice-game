@@ -53,7 +53,6 @@ class SetupView(BaseView):
 
             if username and password and password_again:
                 if password == password_again:
-                    flash("bla")
                     user = User(username=username)
                     user.set_password(password)
                     user.admin = True
@@ -77,15 +76,20 @@ class SetupView(BaseView):
 
         return self.render("admin/setup.html", messages=["bla"])
 
-class UserView(AuthModelView):
+class DiceView(AuthModelView):
     column_exclude_list = ["password"]
     form_excluded_columns = ["password"]
 
-class GameView(AuthModelView):
+    page_size = 10
+
+    create_modal = True
+    edit_modal = True
+
+class GameView(DiceView):
     can_edit = False
 
 admin = Admin(name="!dice", index_view=AuthIndexView(), template_mode="bootstrap4")
 
-admin.add_view(UserView(User, db.session))
+admin.add_view(DiceView(User, db.session))
 admin.add_view(GameView(Game, db.session))
 admin.add_view(SetupView(name="setup", endpoint="setup"))

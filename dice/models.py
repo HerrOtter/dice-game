@@ -8,13 +8,21 @@ db = SQLAlchemy()
 COMPLETED_POINTS = 25
 
 HASH_FUNCTIONS = [
+    # hmac_sha256 with username salt
     lambda pw, salt: hmac.new(
         key=salt.encode("utf-8"),
         msg=pw.encode("utf-8"),
         digestmod="sha256",
     ).hexdigest(),
+
+    # hmac_sha3_512 with static salt
+    lambda pw, salt: hmac.new(
+        key=salt.encode("utf-8"),
+        msg="SALT_KEY".encode("utf-8"),
+        digestmod="sha3_512",
+    ).hexdigest(),
 ]
-DEFAULT_HASH_INDEX = 0
+DEFAULT_HASH_INDEX = 1
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -58,8 +66,8 @@ class Game(db.Model):
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
     guesses = db.Column(db.Integer, default=0, nullable=False)
-    complete = db.Column(db.Boolean, default=False, nullable=False)
     value = db.Column(db.Integer, nullable=False)
+    complete = db.Column(db.Boolean, default=False, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)

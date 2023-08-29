@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login.mixins import UserMixin
 from random import randint 
 import hmac
 
@@ -15,7 +16,7 @@ HASH_FUNCTIONS = [
 ]
 DEFAULT_HASH_INDEX = 0
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)

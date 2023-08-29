@@ -1,13 +1,17 @@
 from typing import Optional
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request
 from sqlalchemy.exc import IntegrityError
+from flask_login import login_user, logout_user, login_required, current_user
 
 from .admin import admin
+from .auth import login_manager
 from .models import db, User, Game
-from .utils import get_current_user, is_authenticated, get_active_game, new_game
+from .utils import get_active_game, new_game
 
+# Flask
 app = Flask("dice")
+app.url_map.strict_slashes = False
 
 # Flask-SQLalchemy
 app.secret_key = 'SECRET_DICE'
@@ -19,12 +23,15 @@ db.init_app(app)
 app.config['FLASK_ADMIN_SWATCH'] = 'yeti'
 admin.init_app(app)
 
+# Flask-Login
+login_manager.init_app(app)
+
 with app.app_context():
     db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if not is_authenticated():
+    if not current_user.is_authenticated:
         return render_template("auth.html")
 
     return {}
@@ -34,7 +41,7 @@ def index():
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
-    if is_authenticated():
+    if current_user.is_authenticated:
         # We are already authenticated, what are we doing?
         return {
             "status": "login_success",
@@ -66,7 +73,7 @@ def api_login():
         }, 400
 
     user = users[0]
-    session["user"] = user.id
+    login_user(user)
     app.logger.info(f"{user.username} logged in successfully")
 
     return {
@@ -76,7 +83,7 @@ def api_login():
 
 @app.route("/api/register", methods=["POST"])
 def api_register():
-    if is_authenticated():
+    if current_user.is_authenticated:
         # We are logged in, why register again?
         return {
             "error": "logged_in",
@@ -108,7 +115,7 @@ def api_register():
         }, 400
 
     app.logger.info('%s registered as a new account', user.username)
-    session["user"] = user.id
+    login_user(user)
 
     return {
         "status": "register_success"
@@ -116,35 +123,22 @@ def api_register():
 
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
-    try:
-        del session["user"]
-    except KeyError:
-        pass
+    logout_user()
     return {
         "status": "logout_success"
     }
 
 @app.route("/api/user", methods=["GET"])
+@login_required
 def api_user():
-    user = get_current_user()
-    if not user:
-        return {
-            "error": "not_authenticated"
-        }, 401
-
     return {
-        "username": user.username,
-        "points": user.points
+        "username": current_user.username,
+        "points": current_user.points
     }
 
 @app.route("/api/dice/guess", methods=["POST"])
+@login_required
 def api_dice_guess():
-    user = get_current_user()
-    if not user:
-        return {
-            "error": "not_authenticated"
-        }, 401
-
     active_game = get_active_game()
     if not active_game:
         active_game = new_game()
@@ -191,20 +185,15 @@ def api_dice_guess():
 
 @app.route("/api/dice/info", defaults={"game_id": None}, methods=["GET"])
 @app.route("/api/dice/info/<int:game_id>", methods=["GET"])
+@login_required
 def api_dice_info(game_id: Optional[int]):
-    user = get_current_user()
-    if not user:
-        return {
-            "error": "not_authenticated"
-        }, 401
-
     games = []
     if not game_id:
-        game_list = user.games
+        game_list = current_user.games
     else:
         specific_game = db.session.get(Game, game_id)
         if (not specific_game or
-            specific_game.user != user or
+            specific_game.user != current_user or
             not specific_game.complete):
             return {
                 "error": "not_found"
@@ -232,9 +221,11 @@ def api_dice_scoreboard():
 
 @app.route("/api/shop/list", defaults={"item_id": None}, methods=["GET"])
 @app.route("/api/shop/list/<int:item_id>", methods=["GET"])
+@login_required
 def api_shop_list(item_id: Optional[int]):
     return {}
 
 @app.route("/api/shop/buy/<int:item_id>", methods=["POST"])
+@login_required
 def api_shop_buy(item_id: int):
     return {}

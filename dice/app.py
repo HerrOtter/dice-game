@@ -1,14 +1,11 @@
-from typing import Optional
 
-from flask import Flask, request
-from sqlalchemy.exc import IntegrityError
-from flask_login import current_user
+from flask import Flask
 
 from .api import api
 from .frontend import frontend
 from .admin import admin
 from .auth import login_manager
-from .models import db, User, Game
+from .models import db
 from .items import import_items
 
 # Flask

@@ -3,7 +3,7 @@ from typing import Optional
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
-from ..models import db
+from ..models import db, Game
 from ..utils import get_active_game, new_game
 
 dice = Blueprint("dice", __name__, url_prefix="/dice")

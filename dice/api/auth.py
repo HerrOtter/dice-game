@@ -1,10 +1,8 @@
-from typing import Optional
-
 from flask import Blueprint, request, current_app
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy.exc import IntegrityError
 
 from ..models import db, User
-from ..utils import get_active_game, new_game
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 

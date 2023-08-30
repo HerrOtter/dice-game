@@ -40,7 +40,20 @@ def api_shop_list(id_name: Optional[str]):
     return buyable_items
 
 
-@shop.route("/api/shop/buy/<int:item_id>", methods=["POST"])
+@shop.route("/buy/<id_name>", methods=["POST"])
 @login_required
-def api_shop_buy(item_id: int):
-    return {}
+def api_shop_buy(id_name: str):
+    item = get_item(id_name)
+    if not item:
+        return {
+            "error": "item_not_found"
+        }, 404
+
+    if not item.buy(current_user):
+        return {
+            "error": "item_not_purchasable"
+        }, 400
+
+    return {
+        "message": "item_bought"
+    }

@@ -1,3 +1,5 @@
+from typing import List
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login.mixins import UserMixin
 from random import randint 
@@ -53,13 +55,24 @@ class User(UserMixin, db.Model):
     def check_password(self, password: str) -> bool:
         return self.hash_password(password) == self.password
 
+    def get_items(self) -> List[str]:
+        return [x.item_name for x in self.items]
+
     def add_points(self, points: int) -> int:
         self.points += points
         return self.points
 
+    def remove_points(self, points: int) -> int:
+        self.points -= points
+        if self.points < 0:
+            self.points = 0
+
+        return self.points 
+
 class UserItems(db.Model):
     __tablename__ = "user_items"
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    user = db.relationship(User)
     item_name = db.Column(db.String, primary_key=True)
 
 class Game(db.Model):

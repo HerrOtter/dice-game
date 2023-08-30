@@ -102,7 +102,12 @@ def api_logout():
 @auth.route("/user", methods=["GET"])
 @login_required
 def api_user():
+    inventory = []
+    for item in current_user.get_items():
+        inventory.append(item)
+
     return {
         "username": current_user.username,
-        "points": current_user.points
+        "points": current_user.points,
+        "inventory": inventory
     }

@@ -8,6 +8,7 @@ from .admin import admin
 from .auth import login_manager
 from .models import db, User, Game
 from .utils import get_active_game, new_game
+from .items import import_items, get_items, get_item
 
 # Flask
 app = Flask("dice")
@@ -26,8 +27,10 @@ admin.init_app(app)
 # Flask-Login
 login_manager.init_app(app)
 
+# Init
 with app.app_context():
     db.create_all()
+import_items()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -217,17 +220,45 @@ def api_dice_info(game_id: Optional[int]):
 
     if game_id:
         return games[0]
+
     return games
 
 @app.route("/api/dice/scoreboard", methods=["GET"])
 def api_dice_scoreboard():
     return {}
 
-@app.route("/api/shop/list", defaults={"item_id": None}, methods=["GET"])
-@app.route("/api/shop/list/<int:item_id>", methods=["GET"])
+@app.route("/api/shop/list", defaults={"id_name": None}, methods=["GET"])
+@app.route("/api/shop/list/<id_name>", methods=["GET"])
 @login_required
-def api_shop_list(item_id: Optional[int]):
-    return {}
+def api_shop_list(id_name: Optional[str]):
+    if id_name:
+        item = get_item(id_name)
+        if not item:
+            return {
+                "error": "item_not_found"
+            }, 404
+
+        all_items = {id_name: item}
+    else:
+        all_items = get_items()
+
+    buyable_items = []
+
+    for name, item in all_items.items():
+        print(item.purchasable(current_user))
+        if item.purchasable(current_user):
+            buyable_items.append({
+                "id_name": name,
+                "name": item.name,
+                "description": item.description,
+                "price": item.price,
+            })
+
+    if id_name:
+        return buyable_items[0]
+
+    return buyable_items
+
 
 @app.route("/api/shop/buy/<int:item_id>", methods=["POST"])
 @login_required

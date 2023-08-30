@@ -1,3 +1,4 @@
+from typing import Dict, Optional
 from pathlib import Path
 from os.path import dirname, join
 import glob
@@ -29,5 +30,8 @@ def import_items() -> int:
 
     return len(__ITEMS__)
 
-def get_items() -> dict: 
+def get_item(name: str) -> Optional[BaseItem]:
+    return __ITEMS__.get(name)
+
+def get_items() -> Dict[str, BaseItem]: 
     return __ITEMS__

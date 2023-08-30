@@ -2,13 +2,12 @@ openapi: 3.0.0
 info:
   version: 0.0.0
   title: Dice Game
-  
   license:
     name: MIT
     
 paths:
    # auth
-   /api/login:
+   /api/auth/login:
      post:
        tags:
         - auth
@@ -20,7 +19,7 @@ paths:
            description: "Login failed"
            
            
-   /api/register:
+   /api/auth/register:
      post:
        tags:
         - auth
@@ -31,7 +30,7 @@ paths:
          "400":
            description: "Registration failed"
            
-   /api/logout:
+   /api/auth/logout:
      post:
        tags:
         - auth
@@ -41,7 +40,7 @@ paths:
            description: "Logout successful or not logged in"
            
    # user
-   /api/user:
+   /api/auth/user:
      get:
        tags:
          - user

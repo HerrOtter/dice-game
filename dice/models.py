@@ -17,14 +17,21 @@ HASH_FUNCTIONS = [
         digestmod="sha256",
     ).hexdigest(),
 
-    # hmac_sha3_512 with static salt
+    # hmac_sha3_512 with username and a static msg
     lambda pw, salt: hmac.new(
         key=salt.encode("utf-8"),
         msg="SALT_KEY".encode("utf-8"),
         digestmod="sha3_512",
     ).hexdigest(),
+
+    # hmac_sha3_512 with username and a static msg
+    lambda pw, salt: hmac.new(
+        key="SECRET_SALT_KEY".encode("utf-8"),
+        msg=pw.encode("utf-8"),
+        digestmod="sha3_512",
+    ).hexdigest(),
 ]
-DEFAULT_HASH_INDEX = 1
+DEFAULT_HASH_INDEX = 2
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"

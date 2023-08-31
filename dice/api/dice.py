@@ -42,17 +42,17 @@ def api_dice_guess():
     if res == 0:
         return {
             "status": "dice_complete",
-            "message": "Correct!"
+            "message": "Korrekt!"
         }
     elif res > 0:
         return {
             "status": "dice_too_large",
-            "message": "Too large!"
+            "message": "Zu Groß!"
         }
     elif res < 0:
         return {
             "status": "dice_too_small",
-            "message": "Too small!"
+            "message": "Zu Klein!"
         }
 
     return {

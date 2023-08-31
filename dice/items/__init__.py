@@ -1,3 +1,9 @@
+"""
+Items submodule
+
+Defines all items and helper methods to load and query those
+"""
+
 from typing import Dict, Optional
 from pathlib import Path
 from os.path import dirname, join

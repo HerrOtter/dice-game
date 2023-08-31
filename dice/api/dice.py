@@ -30,7 +30,7 @@ def api_dice_guess():
             "error": "form_bad_field_guess"
         }, 400
 
-    if guess < 0 or guess > 100:
+    if guess < Game.MIN_VALUE or guess > Game.MAX_VALUE:
         return {
             "error": "invalid_guess"
         }, 400

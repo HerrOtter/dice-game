@@ -1,3 +1,9 @@
+"""
+Frontend submodule
+
+freestanding flask frontend
+"""
+
 from flask import Blueprint
 
 from .main import main

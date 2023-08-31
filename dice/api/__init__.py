@@ -1,3 +1,9 @@
+"""
+API submodules
+
+This module includes all relevant code for the REST API to function
+"""
+
 from flask import Blueprint
 
 from .auth import auth

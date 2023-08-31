@@ -1,3 +1,6 @@
+"""
+!dice game
+"""
 
 __author__ = "HerrOtter, Jan200101"
 __license__ = "MIT"

@@ -12,6 +12,9 @@ def is_admin() -> bool:
     return current_user.admin
 
 def get_active_game() -> Optional[Game]:
+    """
+    Gets the first active game for the current user
+    """
     if not current_user.is_authenticated:
         return None
 
@@ -23,6 +26,9 @@ def get_active_game() -> Optional[Game]:
     return active_game[0]
 
 def new_game() -> Optional[Game]:
+    """
+    Attempts to create a new game for the current user
+    """
     if not current_user.is_authenticated:
         return None
 

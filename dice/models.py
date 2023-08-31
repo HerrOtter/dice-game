@@ -82,6 +82,9 @@ class UserItems(db.Model):
     item_name = db.Column(db.String, primary_key=True)
 
 class Game(db.Model):
+    MIN_VALUE= 0
+    MAX_VALUE = 100
+
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
     guesses = db.Column(db.Integer, default=0, nullable=False)
@@ -95,22 +98,27 @@ class Game(db.Model):
         return f"<{self.__class__.__name__} {self.id}>"
 
     def generate_value(self):
-        self.value = randint(0, 100)
+        """
+        Generates a value between the given a constant min and max value
+        specified in the project description
+        """
+        self.value = randint(self.MIN_VALUE, self.MAX_VALUE)
 
     def check_guess(self, guess: int) -> int:
         """
         Returns:
-          1 when guess is too big
-          0 when guess is correct
-         -1 when guess is too small
 
-        Invalid guesses are not counted
+        - 1 when guess is too big
+        - 0 when guess is correct
+        - 1 when guess is too small
+
+        Invalid guesses do not increment the guess counter
         """
         if self.complete:
             return 0
-        elif guess < 0:
+        elif guess < self.MIN_VALUE:
             return -1
-        elif guess > 100:
+        elif guess > self.MAX_VALUE:
             return 1
 
         self.guesses += 1

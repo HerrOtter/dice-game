@@ -1,5 +1,6 @@
 env
 build
+_build
 dist
 *.egg-info
 .ruff_cache

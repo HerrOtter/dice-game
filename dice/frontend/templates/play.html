@@ -94,6 +94,14 @@
 
     <footer>
         <button class="logout-button" id="logout-button">Logout</button>
+        <script>
+            const logout_url = "{{ url_for('api.auth.api_logout') }}"
+
+            document.getElementById("logout-button").addEventListener("click", async (event) => {
+                const response = await fetch(logout_url, {method: "POST"});
+                window.location.reload()
+            })
+        </script>
     </footer>
 </body>
 </html>

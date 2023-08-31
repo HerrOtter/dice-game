@@ -20,7 +20,7 @@ class AuthIndexView(AdminIndexView):
     @expose("/")
     def index(self):
         if not is_admin():
-            return redirect(url_for("index"))
+            return redirect(url_for("frontend.main.index"))
         return super().index()
 
 class AuthModelView(ModelView):
@@ -70,7 +70,7 @@ class SetupView(BaseView):
                         db.session.add(done)
                         db.session.commit()
 
-                        return redirect(url_for("index"))
+                        return redirect(url_for("frontend.main.index"))
 
                     except IntegrityError:
                         flash("Username already exists", "error")

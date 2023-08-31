@@ -39,7 +39,13 @@ class User(UserMixin, db.Model):
     items = db.relationship("UserItems", viewonly=True)
 
     def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} {self.username}>"
+        return f"<{self.__class__.__name__} {self.username}({self.id})>"
+
+    def __int__(self) -> int:
+        return self.id
+
+    def __str__(self) -> str:
+        return self.username
 
     def hash_password(self, password: str) -> str:
         if self.hash_type is None:
@@ -84,6 +90,9 @@ class Game(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} {self.id}>"
 
     def generate_value(self):
         self.value = randint(0, 100)

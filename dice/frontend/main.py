@@ -10,4 +10,4 @@ def index():
     if not current_user.is_authenticated:
         return render_template("auth.html")
 
-    return {}
+    return render_template("play.html")

@@ -8,36 +8,9 @@
 </head>
 <body>
     <script>
-        async function submitForm(event) {
-            // stop form submission
-            event.preventDefault();
-
-            var form = event.target;
-            var url = form.action;
-
-            const formData = new FormData(form);
-            console.log(formData);
-            const response = await fetch(url, {
-                method: "POST",
-                body: formData
-            });
-
-            const data = await response.json()
-            if ("error" in data)
-            {
-                console.error(data)
-            }
-            else
-            {
-                console.info(data);
-                window.location.reload();
-            }
-        }
     </script>
 
-    <div class="container" id="error">
-        <p>Test Fehler: Wenn du  mich liest bin ich ein Test</p>
-    </div>
+    <div class="container hidden" id="error"></div>
 
     <div class="container">
         <h1>Ratespiel</h1>
@@ -50,7 +23,33 @@
         </form>
         <script>
             const login_form = document.getElementById("login-form");
-            login_form.addEventListener('submit', submitForm);
+            login_form.addEventListener('submit', async (event) => {
+                // stop form submission
+                event.preventDefault();
+
+                var form = event.target;
+                var url = form.action;
+
+                const formData = new FormData(form);
+                console.log(formData);
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json()
+                if ("error" in data)
+                {
+                    console.error(data)
+                    var error_element = document.getElementById("error");
+                    error_element.innerHTML = data["message"];
+                    error_element.classList.remove("hidden");
+                }
+                else
+                {
+                    window.location.reload();
+                }
+            });
         </script>
     </div>
 </body>

@@ -41,6 +41,7 @@ def api_login():
     if not users or not users[0].check_password(password):
         return {
             "error": "invalid_credentials",
+            "message": "Invalid Credentials"
         }, 400
 
     user = users[0]

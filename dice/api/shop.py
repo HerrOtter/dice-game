@@ -25,7 +25,9 @@ def api_shop_list(id_name: Optional[str]):
     buyable_items = []
 
     for name, item in all_items.items():
-        if id_name or (item.purchasable(current_user) and not item.has_item(current_user)):
+        if (id_name or
+            (item.purchasable(current_user) and
+             not item.has_item(current_user))):
             buyable_items.append({
                 "id_name": name,
                 "name": item.name,

@@ -32,7 +32,8 @@ def api_dice_guess():
 
     if guess < Game.MIN_VALUE or guess > Game.MAX_VALUE:
         return {
-            "error": "invalid_guess"
+            "error": "invalid_guess",
+            "message": "Invalid Guess"
         }, 400
 
     res = active_game.check_guess(guess)
@@ -40,15 +41,18 @@ def api_dice_guess():
 
     if res == 0:
         return {
-            "message": "dice_complete"
+            "status": "dice_complete",
+            "message": "Correct!"
         }
     elif res > 0:
         return {
-            "message": "dice_too_large"
+            "status": "dice_too_large",
+            "message": "Too large!"
         }
     elif res < 0:
         return {
-            "message": "dice_too_small"
+            "status": "dice_too_small",
+            "message": "Too small!"
         }
 
     return {
@@ -57,10 +61,13 @@ def api_dice_guess():
 
 @dice.route("/info", methods=["GET"])
 @dice.route("/info/<int:game_id>", methods=["GET"])
+@dice.route("/info/current", defaults={"current_game": True}, methods=["GET"])
 @login_required
-def api_dice_info(game_id: Optional[int] = None):
+def api_dice_info(game_id: Optional[int] = None, current_game: bool = False):
     games = []
-    if not game_id:
+    if current_game:
+        game_list = [get_active_game()]
+    elif not game_id:
         game_list = current_user.games
     else:
         specific_game = db.session.get(Game, game_id)
@@ -74,17 +81,27 @@ def api_dice_info(game_id: Optional[int] = None):
 
 
     for game in game_list:
-        if not game.complete:
+        if game is None:
+            continue
+        elif not current_game and not game.complete:
             continue
 
-        games.append({
-            "id": game.id,
+        data = {
             "guesses": game.guesses,
-            "value": game.value,
-        })
+            "id": game.id,
+            "value": None
+        }
 
-    if game_id:
-        return games[0]
+        if game.complete:
+            data["value"] = game.value,
+
+        games.append(data)
+
+    if game_id or current_game:
+        try:
+            return games[0]
+        except IndexError:
+            return {}
 
     return games
 

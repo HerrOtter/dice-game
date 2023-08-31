@@ -9,17 +9,80 @@
 <body>
     <div class="container">
         <h1>Ratespiel</h1>
-        <p>Versuch: {{ attempts }}</p>
-        <p>Punkte: {{ points }}</p>
-        <form action="/play" method="post">
+        <p>Versuch: <a id="attempts">0</a></p>
+        <p>Punkte: <a id="points">?</a></p>
+
+        <p id="status"></p>
+        <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
             <input type="number" name="guess" placeholder="Rate eine Zahl" required>
             <button type="submit">Raten</button>
         </form>
-        {% if message %}
-        <p>{{ message }}</p>
-        {% else %}
-        <p></p>
-        {% endif %}
+        <script>
+            var attempt_count = 0;
+            const current_game_url = "{{ url_for('api.dice.api_dice_info', current_game=True) }}"
+            const user_url = "{{ url_for('api.auth.api_user') }}"
+
+            const attempt_element = document.getElementById("attempts");
+            const point_element = document.getElementById("points");
+            const status_element = document.getElementById("status");
+            const dice_form = document.getElementById("dice-form");
+
+            function update_attempt_counter()
+            {
+                attempt_element.innerHTML = attempt_count;
+            }
+
+            async function update_point_counter()
+            {
+                const response = await fetch(user_url, {method: "GET"});
+                const data = await response.json();
+
+                point_element.innerHTML = data["points"];
+            }
+
+            window.onload = async () => {
+                const response = await fetch(current_game_url, {method: "GET",});
+
+                const data = await response.json()
+
+                if ("guesses" in data)
+                {
+                    attempt_count = data["guesses"];
+                    update_attempt_counter()
+                }
+                await update_point_counter();
+            }
+
+            dice_form.addEventListener("submit", async (event) => {
+                // stop form submission
+                event.preventDefault();
+
+                var form = event.target;
+                var url = form.action;
+
+                const formData = new FormData(form);
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json()
+
+                status_element.innerHTML = data["message"];
+
+                if (data["status"] == "dice_complete")
+                {
+                    attempt_count = 0;
+                    await update_point_counter();
+                }
+                else
+                {
+                    ++attempt_count;
+                    update_attempt_counter();
+                }
+            });
+        </script>
     </div>
 </body>
 </html>

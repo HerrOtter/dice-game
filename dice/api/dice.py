@@ -55,10 +55,10 @@ def api_dice_guess():
         "error": "invalid_dice"
     }, 400
 
-@dice.route("/info", defaults={"game_id": None}, methods=["GET"])
+@dice.route("/info", methods=["GET"])
 @dice.route("/info/<int:game_id>", methods=["GET"])
 @login_required
-def api_dice_info(game_id: Optional[int]):
+def api_dice_info(game_id: Optional[int] = None):
     games = []
     if not game_id:
         game_list = current_user.games

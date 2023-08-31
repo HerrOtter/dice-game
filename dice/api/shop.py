@@ -7,10 +7,10 @@ from ..items import get_items, get_item
 
 shop = Blueprint("shop", __name__, url_prefix="/shop")
 
-@shop.route("/list", defaults={"id_name": None}, methods=["GET"])
+@shop.route("/list", methods=["GET"])
 @shop.route("/list/<id_name>", methods=["GET"])
 @login_required
-def api_shop_list(id_name: Optional[str]):
+def api_shop_list(id_name: Optional[str] = None):
     if id_name:
         item = get_item(id_name)
         if not item:

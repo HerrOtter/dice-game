@@ -28,7 +28,7 @@ class AuthModelView(ModelView):
         return is_admin()
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for("index"))
+        return redirect(url_for("frontend.main.index"))
 
 class SetupView(BaseView):
     setup_complete = False

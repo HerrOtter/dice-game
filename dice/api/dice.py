@@ -2,8 +2,9 @@ from typing import Optional
 
 from flask import Blueprint, request
 from flask_login import login_required, current_user
+from sqlalchemy import desc
 
-from ..models import db, Game
+from ..models import db, User, Game
 from ..utils import get_active_game, new_game
 
 dice = Blueprint("dice", __name__, url_prefix="/dice")
@@ -107,5 +108,37 @@ def api_dice_info(game_id: Optional[int] = None, current_game: bool = False):
 
 @dice.route("/scoreboard", methods=["GET"])
 def api_dice_scoreboard():
-    return {}
+
+    players = db.session.execute(
+            db.select(User).order_by(desc(User.collected_points))
+        ).all()
+
+    print(players)
+
+    current_position = None
+    if current_user:
+        try:
+            current_position = players.index((current_user,))
+        except ValueError:
+            pass
+
+    scoreboard = []
+    for x in range(0, 10):
+        try:
+            user = players[x][0]
+        except IndexError:
+            user = None
+
+        if not user:
+            scoreboard.append({})
+            continue
+        scoreboard.append({
+            "username": user.username,
+            "points": user.collected_points
+        })
+
+    return {
+        "current_position": current_position+1,
+        "scoreboard": scoreboard
+    }
 

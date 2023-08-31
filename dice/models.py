@@ -32,7 +32,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     hash_type = db.Column(db.Integer, nullable=False)
+    collected_points = db.Column(db.Integer, default=0, nullable=False)
     points = db.Column(db.Integer, default=0, nullable=False)
+
     admin = db.Column(db.Boolean, default=False, nullable=False)
 
     games = db.relationship("Game", viewonly=True)
@@ -66,6 +68,8 @@ class User(UserMixin, db.Model):
 
     def add_points(self, points: int) -> int:
         self.points += points
+        self.collected_points += points
+
         return self.points
 
     def remove_points(self, points: int) -> int:

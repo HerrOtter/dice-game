@@ -1,51 +1,3 @@
-/*body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 10px;    
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.nav-button, .logout-button {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #0056b3;
-    cursor: pointer;
-    padding: 5px 10px;
-    font-size: 14px;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    margin: 10px;
-}
-
-.container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}*/
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -97,10 +49,6 @@ footer {
     margin: 10px;
 }
 
-/* ... restlicher CSS-Code ... */
-
-
-
 .container#error {
     background-color: crimson;
     margin-bottom: 1rem;
@@ -151,4 +99,57 @@ button:hover {
 
 .logout-button:hover, .nav-button:hover {
     color: #fff;
+}
+
+.slider {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #dcdcdc;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.slider input {
+    display: none;
+}
+
+.slider-inner {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.slider input:checked + .slider-inner {
+    transform: translateX(30px);
+}
+
+.slider input:checked + .slider-inner::before {
+    content: 'ON';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #007aff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.slider-inner::before {
+    content: 'OFF';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 12px;
+    font-weight: bold;
 }

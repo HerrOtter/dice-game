@@ -135,14 +135,20 @@
     </div>
 
     <footer>
-        <button class="logout-button" id="logout-button">Logout</button>
-        <script>
-            const logout_url = "{{ url_for('api.auth.api_logout') }}"
-
-            document.getElementById("logout-button").addEventListener("click", async (event) => {
-                const response = await fetch(logout_url, {method: "POST"});
-                window.location.reload()
-            })
+        <button
+            class="logout-button"
+            id="logout-button"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+        <script type="text/javascript">
+            const logout_url = "{{ url_for('api.auth.api_logout') }}";
+            async function logout()
+            {
+                fetch(logout_url, {method: "POST"})
+                    .then(() => window.location.reload());
+            }
         </script>
     </footer>
 </body>

@@ -1,3 +1,7 @@
+/*              Style               */
+/*                                  */
+
+/*        General Settings          */
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -20,19 +24,6 @@ header {
     padding: 10px;
 }
 
-.nav-button, .logout-button {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #0056b3;
-    cursor: pointer;
-    padding: 5px 10px;
-    font-size: 14px;
-}
-
-.nav-button:hover, .logout-button:hover {
-    color: #fff;
-}
-
 .container {
     background-color: #ffffff;
     padding: 20px;
@@ -49,40 +40,31 @@ footer {
     margin: 10px;
 }
 
-.container#error {
-    background-color: crimson;
-    margin-bottom: 1rem;
+
+/*          Nav Settings            */
+.nav-button, .logout-button {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #0056b3;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.nav-button:hover, .logout-button:hover {
     color: #fff;
-    padding: 10px 20px;
 }
 
-.hidden {
-    display: none;
-}
 
+/*         Font Settings            */
 h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-label, input {
-    margin: 5px 0;
-}
-
-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-}
-
+/*         Button Settings          */
 button {
     padding: 10px 20px;
     background-color: #007bff;
@@ -101,6 +83,8 @@ button:hover {
     color: #fff;
 }
 
+
+/*         Slider Settings          */
 .slider {
     position: relative;
     display: inline-block;
@@ -153,3 +137,162 @@ button:hover {
     font-size: 12px;
     font-weight: bold;
 }
+
+
+/*          Form Settings           */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label, input {
+    margin: 5px 0;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+
+/*         Custom Settings          */
+.container#error {
+    background-color: crimson;
+    margin-bottom: 1rem;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/*           Item Settings          */
+/* Item-Liste */
+.container#shop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1200px;
+}
+
+#item_nav {
+    flex: 1 1 25%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Elemente in der Mitte ausrichten */
+}
+
+#item_nav .item_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#item_nav .item {
+    margin: 10px;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+    width: 150px;
+}
+
+#item_nav .item img {
+    max-width: 100%;
+    height: auto;
+}
+
+#item_nav .item:hover {
+    background-color: #f0f0f0;
+}
+
+#item_show {
+    flex: 1 1 75%;
+    max-height: 90vh;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+#item_show #item_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#item_show #points {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#item_show #item_frame {
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+#item_show #item_frame img {
+    max-width: 100%;
+    height: auto;
+}
+
+#item_show #item_description {
+    margin-top: 20px;
+}
+
+#item_show .buy-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#item_frame {
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+#item_frame img {
+    max-width: 100%;
+    height: auto;
+}
+
+#item_description {
+    margin-top: 20px;
+}
+
+.buy-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    font-size: 16px;
+}
+
+.buy-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+

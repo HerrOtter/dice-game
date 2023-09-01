@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/style.css">
+    <title>Ratespiel</title>
+</head>
+<body>
+    <header>
+        <button class="nav-button" id="play-button">Zurück zum Spiel</button>
+        <button class="nav-button" id="settings-button">Einstellungen</button>
+    </header>
+
+    <div class="container" id="shop">
+        <section id="item_nav">
+            <h2>Shop Items</h2>
+            <ul class="item_list">
+                <li class="item">
+                    <img src="https://placehold.co/150x150" alt="Würfel">
+                    <span>Würfel</span>
+                </li>
+                <li class="item">
+                    <img src="https://placehold.co/150x150" alt="Oma">
+                    <span>Oma</span>
+                </li>
+                <li class="item">
+                    <img src="https://placehold.co/150x150" alt="Professor">
+                    <span>Professor</span>
+                </li>
+            </ul>
+        </section>
+
+        <section id="item_show">
+            <div id="item_header">
+                <div id="points">Punktestand: 1000</div>
+                <h2>Item Name</h2>
+            </div>
+            <div id="item_frame">
+                <img src="https://placehold.co/600x400" alt="Item Bild">
+            </div>
+            <div id="item_description">
+                <p>Beschreibung des ausgewählten Items.</p>
+                <p>Preis: 50 Coins</p>
+                <button class="buy-button" id="buy-button">Kaufen</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <button class="logout-button" id="logout-button">Logout</button>
+        <script>
+            const logout_url = "{{ url_for('api.auth.api_logout') }}"
+
+            document.getElementById("logout-button").addEventListener("click", async (event) => {
+                const response = await fetch(logout_url, { method: "POST" });
+                window.location.reload();
+            })
+        </script>
+    </footer>
+</body>
+</html>

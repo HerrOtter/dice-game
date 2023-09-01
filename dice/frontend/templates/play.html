@@ -68,6 +68,7 @@
 
                 var form = event.target;
                 var url = form.action;
+                var button = form.elements.submit;
 
                 const formData = new FormData(form);
 
@@ -82,7 +83,9 @@
 
                 if (data["status"] == "dice_complete")
                 {
+                    form.reset();
                     attempt_count = 0;
+                    button.classList.add("guess-right");
                     await update_point_counter();
                 }
                 else
@@ -91,8 +94,12 @@
                     {
                         ++attempt_count;
                     }
+                    button.classList.add("guess-wrong");
                     update_attempt_counter();
                 }
+                setTimeout(() => {
+                    button.className = "";
+                }, 1000);
             });
         </script>
     </div>

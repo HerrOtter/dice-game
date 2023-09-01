@@ -69,11 +69,19 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.2s ease-out;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+.guess-wrong, .guess-wrong:hover {
+    background-color: #ff0000;
+}
+
+.guess-right, .guess-right:hover {
+    background-color: #4bb543;
 }
 
 .logout-button:hover, .nav-button:hover {

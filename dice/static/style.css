@@ -54,6 +54,21 @@ footer {
     color: #fff;
 }
 
+/* Popups */
+.popup {
+    display: none;
+    position: absolute;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-show {
+    display: flex;
+}
+
 /* Font Settings */
 h1 {
     font-size: 24px;
@@ -74,6 +89,10 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+.color-gray {
+    background-color: gray;
 }
 
 .guess-wrong, .guess-wrong:hover {

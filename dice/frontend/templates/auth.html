@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='popup.js') }}"></script>
     <title>Ratespiel</title>
 </head>
 <body>
@@ -23,6 +24,8 @@
         </form>
         <script>
             const login_form = document.getElementById("login-form");
+            const error_element = document.getElementById("error");
+
             login_form.addEventListener('submit', async (event) => {
                 // stop form submission
                 event.preventDefault();
@@ -38,26 +41,46 @@
                 });
 
                 const data = await response.json()
+
+                error_element.classList.add("hidden");
                 if ("error" in data)
                 {
-                    console.error(data)
-                    var error_element = document.getElementById("error");
-                    error_element.innerHTML = data["message"];
-                    error_element.classList.remove("hidden");
+                    if (data["error"] == "invalid_credentials")
+                    {
+
+                        error_element.innerHTML = data["message"];
+                        error_element.classList.remove("hidden");
+                    }
+                    else
+                    {
+                        OpenPopup("register-popup");
+                    }
                 }
                 else
                 {
                     window.location.reload();
                 }
             });
+
+            function send_form_register()
+            {
+                //ClosePopup();
+                login_form.action = "{{ url_for('api.auth.api_register') }}";
+                login_form.requestSubmit();
+            }
         </script>
     </div>
-    <div class="container" id="popup">
-        <div class="content">
-            <form id="register-form" method="post">
-                <p>Sign up?</p>
-                <button type="submit">Sign up</button>
-            </form>
+    <div id="register-popup" class="popup">
+        <div class="container">
+            <div class="content">
+                <form id="register-form" method="post">
+                    <p>Es gibt keinen Nutzer mit diesem Namen</p>
+                    <div>
+                        <button type="button" onclick="ClosePopup()" class="color-gray">Schließen</button>
+                        <button type="button" onclick="send_form_register()">Registrieren</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

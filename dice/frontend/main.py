@@ -11,3 +11,7 @@ def index():
         return render_template("auth.html")
 
     return render_template("play.html")
+
+@main.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")

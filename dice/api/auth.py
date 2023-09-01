@@ -38,10 +38,16 @@ def api_login():
             db.select(User).filter_by(username=username)
         ).first()
 
-    if not users or not users[0].check_password(password):
+    if not users:
+        return {
+            "error": "invalid_user",
+            "message": "Invalider Nutzer",
+        }, 404
+
+    if not users[0].check_password(password):
         return {
             "error": "invalid_credentials",
-            "message": "Invalid Credentials"
+            "message": "Invalide Credentials"
         }, 400
 
     user = users[0]

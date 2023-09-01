@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='popup.js') }}"></script>
     <title>Ratespiel</title>
 </head>
 <body>
@@ -19,13 +20,13 @@
         {% endif %}
         <button class="nav-button" id="ranking-button">Rangliste</button>
         <button class="nav-button" id="shop-button">Shop</button>
-        <button class="nav-button" id="settings-button">Einstellungen</button>
+        <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">Einstellungen</button>
     </header>
 
     <div class="container">
         <h1>Ratespiel</h1>
-        <p>Versuch: <a id="attempts">{{ current_game.guesses }}</a></p>
-        <p>Punkte: <a id="points">{{ current_user.points }}</a></p>
+        <p>Versuch: <a id="attempts">{{ current_game.guesses or 0 }}</a></p>
+        <p>Punkte: <a id="points">{{ current_user.points or 0 }}</a></p>
 
         <p id="status"></p>
         <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
@@ -40,7 +41,7 @@
             <button type="submit" name="submit">Raten</button>
         </form>
         <script>
-            var attempt_count = {{ current_game.guesses }};
+            var attempt_count = {{ current_game.guesses or 0 }};
             const current_game_url = "{{ url_for('api.dice.api_dice_info', current_game=True) }}"
             const user_url = "{{ url_for('api.auth.api_user') }}"
 
@@ -104,14 +105,16 @@
         </script>
     </div>
 
-    <div class="container" id="setting">
-        <p>Screen Reader:</p>
-        <label class="slider">
-            <input type="checkbox">
-            <span class="slider-inner"></span>
-        </label>
-        <p>Front Size:</p>
-        <input type="range" id="fontSizeSlider" min="10" max="50" step="1" value="16">
+    <div id="settings-popup" class="popup">
+        <div class="container" id="setting">
+            <p>Screen Reader:</p>
+            <label class="slider">
+                <input type="checkbox">
+                <span class="slider-inner"></span>
+            </label>
+            <p>Front Size:</p>
+            <input type="range" id="fontSizeSlider" min="10" max="50" step="1" value="16">
+        </div>
     </div>
 
     <div class="container" id="leaderboard">

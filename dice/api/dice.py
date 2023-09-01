@@ -5,14 +5,14 @@ from flask_login import login_required, current_user
 from sqlalchemy import desc
 
 from ..models import db, User, Game
-from ..utils import get_active_game, new_game
+from ..game import current_game, new_game
 
 dice = Blueprint("dice", __name__, url_prefix="/dice")
 
 @dice.route("/guess", methods=["POST"])
 @login_required
 def api_dice_guess():
-    active_game = get_active_game()
+    active_game = current_game
     if not active_game:
         active_game = new_game()
         if not active_game:
@@ -67,7 +67,7 @@ def api_dice_guess():
 def api_dice_info(game_id: Optional[int] = None, current_game: bool = False):
     games = []
     if current_game:
-        game_list = [get_active_game()]
+        game_list = [current_game]
     elif not game_id:
         game_list = current_user.games
     else:

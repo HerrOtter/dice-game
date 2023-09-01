@@ -29,8 +29,15 @@
 
         <p id="status"></p>
         <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
-            <input type="number" name="guess" placeholder="Rate eine Zahl" required>
-            <button type="submit">Raten</button>
+            <input
+                type="number"
+                min="0"
+                max="100"
+                name="guess"
+                placeholder="Rate eine Zahl"
+                required
+            >
+            <button type="submit" name="submit">Raten</button>
         </form>
         <script>
             var attempt_count = {{ current_game.guesses }};
@@ -80,7 +87,10 @@
                 }
                 else
                 {
-                    ++attempt_count;
+                    if ("error" in data && data["error"] != "invalid_guess")
+                    {
+                        ++attempt_count;
+                    }
                     update_attempt_counter();
                 }
             });

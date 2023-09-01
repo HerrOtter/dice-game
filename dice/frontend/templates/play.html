@@ -9,6 +9,14 @@
 <body>
     
     <header>
+        {% if current_user.admin %}
+            <button class="nav-button" id="admin-button">Admin</button>
+            <script>
+                document.getElementById("admin-button").addEventListener("click", () => {
+                    window.location.href = "/admin"
+                })
+            </script>
+        {% endif %}
         <button class="nav-button" id="ranking-button">Rangliste</button>
         <button class="nav-button" id="shop-button">Shop</button>
         <button class="nav-button" id="settings-button">Einstellungen</button>

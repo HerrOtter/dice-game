@@ -24,8 +24,8 @@
 
     <div class="container">
         <h1>Ratespiel</h1>
-        <p>Versuch: <a id="attempts">0</a></p>
-        <p>Punkte: <a id="points">?</a></p>
+        <p>Versuch: <a id="attempts">{{ current_game.guesses }}</a></p>
+        <p>Punkte: <a id="points">{{ current_user.points }}</a></p>
 
         <p id="status"></p>
         <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
@@ -33,7 +33,7 @@
             <button type="submit">Raten</button>
         </form>
         <script>
-            var attempt_count = 0;
+            var attempt_count = {{ current_game.guesses }};
             const current_game_url = "{{ url_for('api.dice.api_dice_info', current_game=True) }}"
             const user_url = "{{ url_for('api.auth.api_user') }}"
 
@@ -53,19 +53,6 @@
                 const data = await response.json();
 
                 point_element.innerHTML = data["points"];
-            }
-
-            window.onload = async () => {
-                const response = await fetch(current_game_url, {method: "GET",});
-
-                const data = await response.json()
-
-                if ("guesses" in data)
-                {
-                    attempt_count = data["guesses"];
-                    update_attempt_counter()
-                }
-                await update_point_counter();
             }
 
             dice_form.addEventListener("submit", async (event) => {

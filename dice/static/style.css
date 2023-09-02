@@ -211,6 +211,7 @@ input {
 #item_nav .item img {
     max-width: 100%;
     height: auto;
+    border-radius: 5px;
 }
 
 #item_nav .item:hover {

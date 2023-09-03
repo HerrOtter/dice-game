@@ -30,7 +30,7 @@ header {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-top: 50px; /* Abstand vom oberen Rand */
+    margin-top: 50px;
 }
 
 footer {
@@ -40,8 +40,7 @@ footer {
     margin: 10px;
 }
 
-
-/*          Nav Settings            */
+/* Nav Settings */
 .nav-button, .logout-button {
     background-color: #fff;
     color: #000;
@@ -55,16 +54,14 @@ footer {
     color: #fff;
 }
 
-
-/*         Font Settings            */
+/* Font Settings */
 h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-
-/*         Button Settings          */
+/* Button Settings */
 button {
     padding: 10px 20px;
     background-color: #007bff;
@@ -83,8 +80,7 @@ button:hover {
     color: #fff;
 }
 
-
-/*         Slider Settings          */
+/* Slider Settings */
 .slider {
     position: relative;
     display: inline-block;
@@ -190,8 +186,7 @@ button:hover {
     border-radius: 10px;
 }
 
-
-/*          Form Settings           */
+/* Form Settings */
 form {
     display: flex;
     flex-direction: column;
@@ -209,8 +204,7 @@ input {
     outline: none;
 }
 
-
-/*         Custom Settings          */
+/* Custom Settings */
 .container#error {
     background-color: crimson;
     margin-bottom: 1rem;
@@ -222,8 +216,7 @@ input {
     display: none;
 }
 
-
-/*           Shop Settings          */
+/* Shop Settings */
 .container#shop {
     display: flex;
     justify-content: space-between;
@@ -296,7 +289,7 @@ input {
 
 #item_show #item_frame {
     max-width: 80%;
-    margin: 20px auto;
+    margin: 26px auto;
 }
 
 #item_show #item_frame img {
@@ -344,87 +337,86 @@ input {
     background-color: #0056b3;
 }
 
-/*          Ranglist Setting        */
+/* Ranglist Setting */
 #ranklist_header {
     width: 25%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-  }
-  
-  
-  #leaderboard {
+}
+
+#leaderboard {
     width: 28%;
     position: relative;
-  }
-  
-  table {
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
     color: #141a39;
     cursor: default;
-  }
-  
-  tr {
+}
+
+tr {
     transition: all 0.2s ease-in-out;
     border-radius: 0.2rem;
-  }
-  
-  tr:not(:first-child):hover {
+}
+
+tr:not(:first-child):hover {
     background-color: #fff;
     transform: scale(1.1);
     -webkit-box-shadow: 0px 5px 15px 8px #e4e7fb;
     box-shadow: 0px 5px 15px 8px #e4e7fb;
-  }
-  
-  tr:nth-child(odd) {
+}
+
+tr:nth-child(odd) {
     background-color: #f9f9f9;
-  }
-  
-  tr:nth-child(1) {
+}
+
+tr:nth-child(1) {
     color: #fff;
-  }
-  
-  td {
+}
+
+td {
     height: 3.2rem;
     font-family: "Rubik", sans-serif;
     font-size: 1.4rem;
     padding: 1rem 2rem;
     position: relative;
-  }
-  
-  .number {
+}
+
+.number {
     width: 1rem;
     font-size: 2.2rem;
     font-weight: bold;
     text-align: left;
-  }
-  
-  .name {
+}
+
+.name {
     text-align: left;
     font-size: 1.2rem;
-  }
-  
-  .points {
+}
+
+.points {
     font-weight: bold;
     font-size: 1.3rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  }
-  
-  .points:first-child {
+}
+
+.points:first-child {
     width: 10rem;
-  }
-  
-  .gold-medal {
+}
+
+.gold-medal {
     height: 3rem;
     margin-left: 1.5rem;
-  }
-  
-  .ribbon {
+}
+
+.ribbon {
     width: 105%;
     height: 3.6rem;
     top: 6rem;
@@ -433,9 +425,9 @@ input {
     left: -0.8rem;
     -webkit-box-shadow: 0px 15px 11px -6px #7a7a7d;
     box-shadow: 0px 15px 11px -6px #7a7a7d;
-  }
-  
-  .ribbon::before {
+}
+
+.ribbon::before {
     content: "";
     height: 1.5rem;
     width: 1.5rem;
@@ -445,9 +437,9 @@ input {
     background-color: #007bff;
     position: absolute;
     z-index: -1;
-  }
-  
-  .ribbon::after {
+}
+
+.ribbon::after {
     content: "";
     height: 1.5rem;
     width: 1.5rem;
@@ -457,18 +449,11 @@ input {
     background-color: #007bff;
     position: absolute;
     z-index: -1;
-  }
-    
-.close{
+}
+
+.close {
     width: 30%;
     font-size: larger;
     margin-top: 1rem;
     text-align: none;
 }
-
-
-
-
-
-
-

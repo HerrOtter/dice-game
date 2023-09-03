@@ -16,15 +16,15 @@
         <section id="item_nav">
             <h2>Shop Items</h2>
             <ul class="item_list">
-                <li class="item">
+                <li class="item" data-name="Würfel" data-image="../footage/dice_600x400.jpg" data-description="Beschreibung Wüfel" data-price="100">
                     <img src="../footage/dice_150x150.jpg" alt="Würfel">
                     <span>Würfel</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="Oma" data-image="../footage/gradma_600x400.jpg>" data-description="Beschreibung Oma" data-price="1000">
                     <img src="../footage/grandma_150x150.jpg" alt="Oma">
                     <span>Oma</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="Professor" data-image"../footage/professor_600x400.jpg" data-description="Beschreibung Professor" data-price="2500">
                     <img src="../footage/professor_150x150.jpg" alt="Professor">
                     <span>Professor</span>
                 </li>
@@ -58,5 +58,34 @@
             })
         </script>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const itemNav = document.getElementById("item_nav");
+            const itemShow = document.getElementById("item_show");
+
+            itemNav.addEventListener("click", function (event) {
+                if (event.target.classList.contains("item")) {
+                    const selectedItem = event.target;
+                    const itemName = selectedItem.dataset.name;
+                    const itemImage = selectedItem.dataset.image;
+                    const itemDescription = selectedItem.dataset.description;
+                    const itemPrice = selectedItem.dataset.price;
+
+                    const itemHeader = itemShow.querySelector("#item_header");
+                    const itemFrame = itemShow.querySelector("#item_frame");
+                    const itemDescriptionDiv = itemShow.querySelector("#item_description");
+
+                    itemHeader.querySelector("h2").textContent = itemName;
+                    itemFrame.innerHTML = `<img src="${itemImage}" alt="${itemName}">`;
+                    itemDescriptionDiv.innerHTML = `
+                        <p>${itemDescription}</p>
+                        <p>Preis: ${itemPrice} Coins</p>
+                        <button class="buy-button" id="buy-button">Kaufen</button>
+                    `;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

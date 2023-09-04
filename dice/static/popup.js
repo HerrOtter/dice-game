@@ -33,6 +33,10 @@ function OpenPopup(id)
 
     var element = findPopupElement(id, event);
     if (element) {
+        const callback_name = element.getAttribute("data-popup-open-callback");
+        if (callback_name) {
+            window[callback_name].call(element);
+        }
         element.classList.add("popup-show");
     }
 }
@@ -41,6 +45,11 @@ function ClosePopup(id)
 {
     var element = findPopupElement(id, event);
     if (element) {
+        const callback_name = element.getAttribute("data-popup-close-callback");
+        if (callback_name) {
+            window[callback_name].call(element);
+        }
+
         element.classList.remove("popup-show");
     }
 }

@@ -1,4 +1,7 @@
-<div id="leaderboard-popup" class="popup">
+<div class="popup"
+    id="leaderboard-popup"
+    data-popup-open-callback="leaderboard_open"
+>
     <div class="container" id="leaderboard">
     <h1>{{ t("leaderboard.ranking") }}</h1>
     <div class="ribbon"></div>
@@ -34,3 +37,9 @@
         </div>
     </div>
 </div>
+<script>
+function leaderboard_open()
+{
+    console.log("leaderboard open")
+}
+</script>

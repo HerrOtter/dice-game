@@ -3,7 +3,6 @@ from pathlib import Path
 from os.path import dirname, join
 import json
 
-from flask import session
 from werkzeug.local import LocalProxy
 from flask_login import current_user
 

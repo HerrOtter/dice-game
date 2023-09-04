@@ -39,6 +39,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     hash_type = db.Column(db.Integer, nullable=False)
+    lang = db.Column(db.String, nullable=True)
+
     collected_points = db.Column(db.Integer, default=0, nullable=False)
     points = db.Column(db.Integer, default=0, nullable=False)
 

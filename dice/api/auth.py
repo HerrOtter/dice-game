@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
 
 from ..models import db, User
+from ..i18n import set_current_lang, get_current_lang
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -116,5 +117,20 @@ def api_user():
     return {
         "username": current_user.username,
         "points": current_user.points,
+        "lang": get_current_lang(),
         "inventory": inventory
     }
+
+@auth.route("/change_language", methods=["POST"])
+@login_required
+def api_lang():
+    try:
+        language = request.form["language"]
+    except KeyError:
+        return {
+            "error": "form_missing_field_language",
+        }, 400
+
+    set_current_lang(language)
+
+    return ""

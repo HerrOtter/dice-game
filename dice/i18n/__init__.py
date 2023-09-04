@@ -3,6 +3,12 @@ from pathlib import Path
 from os.path import dirname, join
 import json
 
+from flask import session
+from werkzeug.local import LocalProxy
+from flask_login import current_user
+
+from ..models import db
+
 DEFAULT_LANG = "de"
 
 __TRANSLATIONS__ = {}
@@ -17,8 +23,11 @@ def load_translations():
         data = json.load(handle)
         __TRANSLATIONS__[filepath.stem] = data
 
-def translate(key: str, lang: str = DEFAULT_LANG) -> str:
+def translate(key: str, lang: str = None) -> str:
     keys = key.split(".")
+
+    if not lang:
+        lang = get_current_lang()
 
     try:
         entry = __TRANSLATIONS__[lang]
@@ -30,9 +39,26 @@ def translate(key: str, lang: str = DEFAULT_LANG) -> str:
     except KeyError:
         return f"#{key}"
 
+def set_current_lang(lang: str):
+    if current_user and hasattr(current_user, "lang"):
+        current_user.lang = lang
+        db.session.commit()
+
+def get_current_lang() -> str:
+    lang = None
+    if hasattr(current_user, "lang"):
+        lang = current_user.lang
+    if not lang:
+        lang = DEFAULT_LANG
+
+    return lang
+
+current_lang = LocalProxy(lambda: get_current_lang())
+
 def i18n_context_processor():
     return dict(
         t=translate,
+        current_lang=get_current_lang()
     )
 
 class i18n_manager:

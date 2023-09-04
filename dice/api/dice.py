@@ -123,14 +123,14 @@ def api_dice_scoreboard():
             pass
 
     scoreboard = []
-    for x in range(0, 10):
+    for x in range(0, 5):
         try:
             user = players[x][0]
         except IndexError:
             user = None
 
         if not user:
-            scoreboard.append({})
+            scoreboard.append(None)
             continue
         scoreboard.append({
             "username": user.username,

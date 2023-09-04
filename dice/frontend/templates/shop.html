@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/style.css">
-    <title>Ratespiel</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
     <header>
         <button class="nav-button" id="play-button">Zurück zum Spiel</button>
-        <button class="nav-button" id="settings-button">Einstellungen</button>
+        <script>
+            document.getElementById("play-button").addEventListener("click", () => {
+                location.href = "{{ url_for('frontend.main.index') }}";
+            });
+        </script>
     </header>
 
     <div class="container" id="shop">
         <section id="item_nav">
             <h2>Shop Items</h2>
             <ul class="item_list">
-                <li class="item" data-name="Würfel" data-image="../footage/dice_600x400.webp" data-description="Beschreibung Wüfel" data-price="100">
-                    <img src="../footage/dice_150x150.webp" alt="Würfel">
+                <li class="item" data-name="Würfel" data-image="{{ url_for('static', filename='footage/dice_600x400.webp') }}" data-description="Beschreibung Wüfel" data-price="100">
+                    <img src="{{ url_for('static', filename='footage/dice_150x150.webp') }}" alt="Würfel">
                     <span>Würfel</span>
                 </li>
-                <li class="item" data-name="Oma" data-image="../footage/grandmother_600x400.webp>" data-description="Beschreibung Oma" data-price="1000">
-                    <img src="../footage/grandmother_150x150.webp" alt="Oma">
+                <li class="item" data-name="Oma" data-image="{{ url_for('static', filename='footage/grandmother_600x400.webp') }}>" data-description="Beschreibung Oma" data-price="1000">
+                    <img src="{{ url_for('static', filename='footage/grandmother_150x150.webp') }}" alt="Oma">
                     <span>Oma</span>
                 </li>
-                <li class="item" data-name="Professor" data-image"../footage/professor_600x400.webp" data-description="Beschreibung Professor" data-price="2500">
-                    <img src="../footage/professor_150x150.webp" alt="Professor">
+                <li class="item" data-name="Professor" data-image="{{ url_for('static', filename='footage/professor_600x400.webp') }}" data-description="Beschreibung Professor" data-price="2500">
+                    <img src="{{ url_for('static', filename='footage/professor_150x150.webp') }}" alt="Professor">
                     <span>Professor</span>
                 </li>
             </ul>
@@ -37,7 +35,7 @@
                 <h2>Item Name</h2>
             </div>
             <div id="item_frame">
-                <img src="../footage/dice_600x400.webp" alt="Item Bild">
+                <img src="{{ url_for('static', filename='footage/dice_600x400.webp') }}" alt="Item Bild">
             </div>
             <div id="item_description">
                 <p>Beschreibung des ausgewählten Items.</p>
@@ -47,17 +45,6 @@
         </section>
     </div>
 
-    <footer>
-        <button class="logout-button" id="logout-button">Logout</button>
-        <script>
-            const logout_url = "{{ url_for('api.auth.api_logout') }}"
-
-            document.getElementById("logout-button").addEventListener("click", async (event) => {
-                const response = await fetch(logout_url, { method: "POST" });
-                window.location.reload();
-            })
-        </script>
-    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -87,5 +74,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

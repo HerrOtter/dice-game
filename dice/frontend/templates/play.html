@@ -13,6 +13,11 @@
         <button class="nav-button" id="ranking-button" onclick="OpenPopup('leaderboard-popup')">Rangliste</button>
         <button class="nav-button" id="shop-button">Shop</button>
         <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">Einstellungen</button>
+        <script>
+            document.getElementById("shop-button").addEventListener("click", () => {
+                location.href = "{{ url_for('frontend.main.shop') }}";
+            });
+        </script>
     </header>
 
     <div class="container">

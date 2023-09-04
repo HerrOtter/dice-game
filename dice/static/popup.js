@@ -1,4 +1,6 @@
-
+/*
+ * does the same as <dialog> but supports more browsers
+ */
 function findParentPopup(event)
 {
     if (!event)

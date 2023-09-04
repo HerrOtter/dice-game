@@ -1,11 +1,47 @@
-<div id="settings-popup" class="popup">
+<div id="settings-popup"
+    class="popup"
+    data-popup-close-callback="settings_close_callback"
+>
     <div class="container" id="setting">
         <p>{{ t("settings.screen_reader") }}:</p>
         <label class="slider">
             <input type="checkbox">
             <span class="slider-inner"></span>
         </label>
+
+        <select id="language-selector" value="{{ current_lang }}">
+            <option value="">{{ t("settings.language.choose") }}</option>
+            <option value="de">{{ t("settings.language.de") }} (Deutsch)</option>
+            <option value="en">{{ t("settings.language.en") }} (english)</option>
+        </select>
+
         <p>{{ t("settings.font_size") }}:</p>
         <input type="range" id="fontSizeSlider" min="10" max="50" step="1" value="16">
     </div>
+    <script>
+        async function settings_close_callback()
+        {
+            var reload = false;
+            const lang_value = document.getElementById("language-selector").value
+
+            if (lang_value)
+            {
+                const url = "{{ url_for('api.auth.api_lang') }}"
+                const formData = new FormData();
+                formData.append("language", lang_value)
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: formData
+                });
+
+                reload = true;
+            }
+
+            if (reload)
+            {
+                window.location.reload();
+            }
+        }
+    </script>
 </div>

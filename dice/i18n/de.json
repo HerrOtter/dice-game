@@ -35,7 +35,14 @@
 
     "settings": {
         "screen_reader": "Bildschirmleser",
-        "font_size": "Schriftgröße"
+        "font_size": "Schriftgröße",
+
+        "language": {
+            "choose": "Wähle eine Sprache",
+
+            "de": "Deutsch",
+            "en": "Englisch"
+        }
     },
 
     "shop": {

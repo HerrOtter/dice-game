@@ -19,18 +19,12 @@
         <section id="item_nav">
             <h2>{{ t("shop.items") }}</h2>
             <ul class="item_list">
-                <li class="item" data-name="Würfel" data-image="{{ url_for('static', filename='footage/dice_600x400.webp') }}" data-description="Beschreibung Wüfel" data-price="100">
-                    <img src="{{ url_for('static', filename='footage/dice_150x150.webp') }}" alt="Würfel">
-                    <span>Würfel</span>
-                </li>
-                <li class="item" data-name="Oma" data-image="{{ url_for('static', filename='footage/grandmother_600x400.webp') }}>" data-description="Beschreibung Oma" data-price="1000">
-                    <img src="{{ url_for('static', filename='footage/grandmother_150x150.webp') }}" alt="Oma">
-                    <span>Oma</span>
-                </li>
-                <li class="item" data-name="Professor" data-image="{{ url_for('static', filename='footage/professor_600x400.webp') }}" data-description="Beschreibung Professor" data-price="2500">
-                    <img src="{{ url_for('static', filename='footage/professor_150x150.webp') }}" alt="Professor">
-                    <span>Professor</span>
-                </li>
+                {% for name, item in items.items() %}
+                    <li class="item" data-name="{{ name }}" data-image="{{ url_for('static', filename='footage/dice_600x400.webp') }}" data-description="{{ item.description }}" data-price="100">
+                        <img src="{{ url_for('static', filename='footage/dice_150x150.webp') }}" alt="{{ item.name }}">
+                        <span>{{ item.name }}</span>
+                    </li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -43,8 +37,8 @@
                 <img src="{{ url_for('static', filename='footage/dice_600x400.webp') }}" alt="Item Bild">
             </div>
             <div id="item_description">
-                <p>Beschreibung des ausgewählten Items.</p>
-                <p>{{ t("shop.cost") }}: 50 Coins</p>
+                <p>TODO</p>
+                <p>{{ t("shop.cost") }}: TODO</p>
                 <button class="buy-button" id="buy-button">{{ t("shop.buy") }}</button>
             </div>
         </section>

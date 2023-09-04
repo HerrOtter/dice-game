@@ -41,3 +41,15 @@ def get_item(name: str) -> Optional[BaseItem]:
 
 def get_items() -> Dict[str, BaseItem]: 
     return __ITEMS__
+
+def items_context_processor():
+    return dict(
+        items=get_items(),
+    )
+
+class item_manager:
+    @classmethod
+    def init_app(cls, app):
+        import_items()
+        app.context_processor(items_context_processor)
+

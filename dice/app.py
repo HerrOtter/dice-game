@@ -7,7 +7,7 @@ from .admin import admin
 from .auth import login_manager
 from .game import _game_context_processor
 from .models import db
-from .items import import_items
+from .items import item_manager
 from .i18n import i18n_manager
 
 # Flask
@@ -32,6 +32,6 @@ login_manager.init_app(app)
 # Init
 with app.app_context():
     db.create_all()
-import_items()
+item_manager.init_app(app)
 i18n_manager.init_app(app)
 app.context_processor(_game_context_processor)

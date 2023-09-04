@@ -1,6 +1,9 @@
 
 function findParentPopup(event)
 {
+    if (!event)
+        return null;
+
     var target = event.target
     while (target && !target.classList.contains("popup"))
     {
@@ -26,6 +29,8 @@ function findPopupElement(id, event)
 
 function OpenPopup(id)
 {
+    CloseAllPopups();
+
     var element = findPopupElement(id, event);
     if (element) {
         element.classList.add("popup-show");
@@ -40,6 +45,15 @@ function ClosePopup(id)
     }
 }
 
+function CloseAllPopups()
+{
+    var open_popups = document.getElementsByClassName("popup-show");
+    for (const c of open_popups)
+    {
+        ClosePopup(c.id);
+    }
+}
+
 function PopupOnclick()
 {
     if (event.target.classList.contains("popup"))
@@ -49,7 +63,8 @@ function PopupOnclick()
 window.addEventListener('load', 
   () => { 
     var popup_elements = document.getElementsByClassName("popup");
-    for (const c of popup_elements) {
+    for (const c of popup_elements)
+    {
         c.addEventListener("click", PopupOnclick);
     }
   }, false

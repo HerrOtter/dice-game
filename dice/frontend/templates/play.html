@@ -10,7 +10,7 @@
                 })
             </script>
         {% endif %}
-        <button class="nav-button" id="ranking-button">Rangliste</button>
+        <button class="nav-button" id="ranking-button" onclick="OpenPopup('leaderboard-popup')">Rangliste</button>
         <button class="nav-button" id="shop-button">Shop</button>
         <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">Einstellungen</button>
     </header>
@@ -109,7 +109,8 @@
         </div>
     </div>
 
-    <div class="container" id="leaderboard">
+    <div id="leaderboard-popup" class="popup">
+        <div class="container" id="leaderboard">
         <h1>Ranking</h1>
         <div class="ribbon"></div>
             <table>
@@ -142,8 +143,9 @@
                 </tr>
             </table>   
             <div id="buttons">
-                <button class="close">Schliesen</button>
+                <button onclick="ClosePopup()">Schliesen</button>
             </div>
+        </div>
     </div>
 
     <footer>

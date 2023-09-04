@@ -56,7 +56,10 @@ footer {
 
 /* Popups */
 .popup {
-    display: none;
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+
     position: absolute;
     backdrop-filter: blur(10px);
     width: 100%;
@@ -66,7 +69,8 @@ footer {
 }
 
 .popup-show {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Font Settings */

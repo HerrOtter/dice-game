@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% block title %}Shop{% endblock %}
+
 {% block body %}
     {% include 'popup/settings.html' %}
 
     <header>
-        <button class="nav-button" id="play-button">Zurück zum Spiel</button>
-        <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">Einstellungen</button>
+        <button class="nav-button" id="play-button">{{ t("navbar.back_game") }}</button>
+        <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">{{ t("navbar.settings") }}</button>
         <script>
             document.getElementById("play-button").addEventListener("click", () => {
                 location.href = "{{ url_for('frontend.main.index') }}";
@@ -15,7 +17,7 @@
 
     <div class="container" id="shop">
         <section id="item_nav">
-            <h2>Shop Items</h2>
+            <h2>{{ t("shop.items") }}</h2>
             <ul class="item_list">
                 <li class="item" data-name="Würfel" data-image="{{ url_for('static', filename='footage/dice_600x400.webp') }}" data-description="Beschreibung Wüfel" data-price="100">
                     <img src="{{ url_for('static', filename='footage/dice_150x150.webp') }}" alt="Würfel">
@@ -34,7 +36,7 @@
 
         <section id="item_show">
             <div id="item_header">
-                <div id="points">Punktestand: 1000</div>
+                <div id="points">{{ t("shop.points") }}: {{ current_user.points }}</div>
                 <h2>Item Name</h2>
             </div>
             <div id="item_frame">
@@ -42,8 +44,8 @@
             </div>
             <div id="item_description">
                 <p>Beschreibung des ausgewählten Items.</p>
-                <p>Preis: 50 Coins</p>
-                <button class="buy-button" id="buy-button">Kaufen</button>
+                <p>{{ t("shop.cost") }}: 50 Coins</p>
+                <button class="buy-button" id="buy-button">{{ t("shop.buy") }}</button>
             </div>
         </section>
     </div>

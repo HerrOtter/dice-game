@@ -1,7 +1,47 @@
 {
+    "guessing_game": "Ratespiel",
+    "close": "Schließen",
+
     "auth": {
         "username": "Username",
         "password": "Password",
-        "login": "Login"
+
+        "login": "Login",
+        "register": "Registrieren",
+
+        "no_user_found": "Es gibt keinen Nutzer mit diesem Namen"
+    },
+
+    "navbar": {
+        "admin": "Admin",
+        "leaderboard": "Rangliste",
+        "shop": "Shop",
+        "settings": "Einstellungen",
+        "back_game": "Zurück zum Spiel",
+
+        "logout": "Logout"
+    },
+
+    "game": {
+        "tries": "Versuch",
+        "points": "Punkte",
+        "guess_number": "Rate eine Zahl",
+        "guess": "Raten"
+    },
+
+    "leaderboard": {
+        "ranking": "Ranking"
+    },
+
+    "settings": {
+        "screen_reader": "Bildschirmleser",
+        "font_size": "Schriftgröße"
+    },
+
+    "shop": {
+        "items": "Shop Items",
+        "points": "Punkte",
+        "cost": "Preis",
+        "buy": "Kaufen"
     }
 }

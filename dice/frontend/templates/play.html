@@ -2,20 +2,20 @@
 
 {% block body %}
     {% include 'popup/settings.html' %}
-    {% include 'popup/scoreboard.html' %}
+    {% include 'popup/leaderboard.html' %}
 
     <header>
         {% if current_user.admin %}
-            <button class="nav-button" id="admin-button">Admin</button>
+            <button class="nav-button" id="admin-button">{{ t("navbar.admin") }}</button>
             <script>
                 document.getElementById("admin-button").addEventListener("click", () => {
                     window.location.href = "/admin"
                 })
             </script>
         {% endif %}
-        <button class="nav-button" id="ranking-button" onclick="OpenPopup('leaderboard-popup')">Rangliste</button>
-        <button class="nav-button" id="shop-button">Shop</button>
-        <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">Einstellungen</button>
+        <button class="nav-button" id="ranking-button" onclick="OpenPopup('leaderboard-popup')">{{ t("navbar.leaderboard") }}</button>
+        <button class="nav-button" id="shop-button">{{ t("navbar.shop") }}</button>
+        <button class="nav-button" id="settings-button" onclick="OpenPopup('settings-popup')">{{ t("navbar.settings") }}</button>
         <script>
             document.getElementById("shop-button").addEventListener("click", () => {
                 location.href = "{{ url_for('frontend.main.shop') }}";
@@ -24,9 +24,9 @@
     </header>
 
     <div class="container">
-        <h1>Ratespiel</h1>
-        <p>Versuch: <a id="attempts">{{ current_game.guesses or 0 }}</a></p>
-        <p>Punkte: <a id="points">{{ current_user.points or 0 }}</a></p>
+        <h1>{{ t("guessing_game") }}</h1>
+        <p>{{ t("game.tries") }}: <a id="attempts">{{ current_game.guesses or 0 }}</a></p>
+        <p>{{ t("game.points") }}: <a id="points">{{ current_user.points or 0 }}</a></p>
 
         <p id="status"></p>
         <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
@@ -35,10 +35,10 @@
                 min="0"
                 max="100"
                 name="guess"
-                placeholder="Rate eine Zahl"
+                placeholder="{{ t('game.guess_number') }}"
                 required
             >
-            <button type="submit" name="submit">Raten</button>
+            <button type="submit" name="submit">{{ t("game.guess") }}</button>
         </form>
         <script>
             var attempt_count = {{ current_game.guesses or 0 }};
@@ -111,7 +111,7 @@
             id="logout-button"
             onclick="logout()"
         >
-            Logout
+            {{ t("navbar.logout") }}
         </button>
         <script type="text/javascript">
             const logout_url = "{{ url_for('api.auth.api_logout') }}";

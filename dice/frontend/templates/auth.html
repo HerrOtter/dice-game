@@ -7,12 +7,12 @@
     <div class="container hidden" id="error"></div>
 
     <div class="container">
-        <h1>Ratespiel</h1>
+        <h1>{{ t("guessing_game") }}</h1>
         <form id="login-form" action="{{ url_for('api.auth.api_login') }}" method="post">
             <label for="player_name">{{ t("auth.username") }}:</label>
-            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="text" id="username" name="username" placeholder="{{ t('auth.username') }}" required>
             <label for="password">{{ t("auth.password") }}</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="{{ t('auth.password') }}" required>
             <button type="submit">{{ t("auth.login") }}</button>
         </form>
         <script>
@@ -67,10 +67,10 @@
         <div class="container">
             <div class="content">
                 <form id="register-form" method="post">
-                    <p>Es gibt keinen Nutzer mit diesem Namen</p>
+                    <p>{{ t("auth.no_user_found") }}</p>
                     <div>
-                        <button type="button" onclick="ClosePopup()" class="color-gray">Schließen</button>
-                        <button type="button" onclick="send_form_register()">Registrieren</button>
+                        <button type="button" onclick="ClosePopup()" class="color-gray">{{ t("close") }}</button>
+                        <button type="button" onclick="send_form_register()">{{ t("auth.register") }}</button>
                     </div>
                 </form>
             </div>

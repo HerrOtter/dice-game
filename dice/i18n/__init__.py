@@ -28,7 +28,7 @@ def translate(key: str, lang: str = DEFAULT_LANG) -> str:
 
         return entry
     except KeyError:
-        return key
+        return f"#{key}"
 
 def i18n_context_processor():
     return dict(

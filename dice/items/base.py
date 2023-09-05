@@ -1,17 +1,19 @@
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
 from ..models import db, User, UserItems
+from ..i18n import translate
 
 class BaseItem(ABC):
-    name: str
-    description: str
     price: int
     requires: List["BaseItem"]
     enabled: bool = True
+
+    asset_small: Optional[str] = None
+    asset_big: Optional[str] = None
 
     def __init__(self):
         self.requires = []
@@ -58,3 +60,9 @@ class BaseItem(ABC):
         # TODO check required items
 
         return True
+
+    def get_name(self) -> str:
+        return translate(f"shop.item.{self.__class__.__name__}.name")
+
+    def get_description(self) -> str:
+        return translate(f"shop.item.{self.__class__.__name__}.description")

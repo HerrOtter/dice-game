@@ -18,11 +18,16 @@
     <div class="container" id="shop">
         <section id="item_nav">
             <h2>{{ t("shop.items") }}</h2>
-            <ul class="item_list">
-                {% for name, item in items.items() %}
-                    <li class="item" data-name="{{ name }}" data-image="{{ url_for('static', filename='footage/dice_600x400.webp') }}" data-description="{{ item.description }}" data-price="100">
-                        <img src="{{ url_for('static', filename='footage/dice_150x150.webp') }}" alt="{{ item.name }}">
-                        <span>{{ item.name }}</span>
+            <ul id="item_list">
+                {% for name, item in get_items().items() %}
+                    <li class="item"
+                        data-name="{{ item.get_name() }}"
+                        data-description="{{ item.get_description() }}"
+                        data-price="{{ item.price }}"
+                        data-image="{{ url_for('static', filename=item.asset_big) }}" data-description="{{ item.description }}"
+                    >
+                        <img src="{{ url_for('static', filename=item.asset_small) }}" alt="{{ item.name }}">
+                        <span>{{ item.get_name() }}</span>
                     </li>
                 {% endfor %}
             </ul>
@@ -33,44 +38,56 @@
                 <div id="points">{{ t("shop.points") }}: {{ current_user.points }}</div>
                 <h2>Item Name</h2>
             </div>
-            <div id="item_frame">
-                <img src="{{ url_for('static', filename='footage/dice_600x400.webp') }}" alt="Item Bild">
-            </div>
-            <div id="item_description">
-                <p>TODO</p>
-                <p>{{ t("shop.cost") }}: TODO</p>
-                <button class="buy-button" id="buy-button">{{ t("shop.buy") }}</button>
+            <img id="item_frame">
+            </img>
+            <div>
+                <p><a id="item_description"></a></p>
+                <p>{{ t("shop.cost") }}: <a id="item_price">?</a></p>
+                <button id="buy-button" disabled>{{ t("shop.buy") }}</button>
             </div>
         </section>
     </div>
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const itemNav = document.getElementById("item_nav");
-            const itemShow = document.getElementById("item_show");
+        const itemNav = document.getElementById("item_nav");
+        const itemShow = document.getElementById("item_show");
 
-            itemNav.addEventListener("click", function (event) {
-                if (event.target.classList.contains("item")) {
-                    const selectedItem = event.target;
-                    const itemName = selectedItem.dataset.name;
-                    const itemImage = selectedItem.dataset.image;
-                    const itemDescription = selectedItem.dataset.description;
-                    const itemPrice = selectedItem.dataset.price;
+        function displayItem (selectedItem) {
+            if (selectedItem.classList.contains("item")) {
+                const itemName = selectedItem.dataset.name;
+                const itemImage = selectedItem.dataset.image;
+                const itemDescription = selectedItem.dataset.description;
+                const itemPrice = selectedItem.dataset.price;
 
-                    const itemHeader = itemShow.querySelector("#item_header");
-                    const itemFrame = itemShow.querySelector("#item_frame");
-                    const itemDescriptionDiv = itemShow.querySelector("#item_description");
+                const itemHeader = itemShow.querySelector("#item_header");
+                const itemFrame = itemShow.querySelector("#item_frame");
+                const itemDescriptionElem = itemShow.querySelector("#item_description");
+                const itemPriceElem = itemShow.querySelector("#item_price");
+                const buyButton = itemShow.querySelector("#buy-button");
 
-                    itemHeader.querySelector("h2").textContent = itemName;
-                    itemFrame.innerHTML = `<img src="${itemImage}" alt="${itemName}">`;
-                    itemDescriptionDiv.innerHTML = `
-                        <p>${itemDescription}</p>
-                        <p>Preis: ${itemPrice} Coins</p>
-                        <button class="buy-button" id="buy-button">Kaufen</button>
-                    `;
-                }
+                itemHeader.querySelector("h2").textContent = itemName;
+                itemFrame.src = itemImage;
+                itemFrame.alt = itemName;
+                itemDescriptionElem.innerHTML = itemDescription;
+                itemPriceElem.innerHTML = itemPrice;
+                buyButton.disabled = false;
+            }
+        }
+
+        function displayFirstItem() {
+            const item_list = document.getElementById("item_list").children;
+            if (item_list.length > 0) {
+                displayItem(item_list[0]);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            itemNav.addEventListener("click", (event) => {
+                displayItem(event.target);
             });
+
+            displayFirstItem();
         });
     </script>
 {% endblock %}

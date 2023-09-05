@@ -50,6 +50,18 @@
         "items": "Shop Items",
         "points": "Punkte",
         "cost": "Preis",
-        "buy": "Kaufen"
+        "buy": "Kaufen",
+
+        "item": {
+            "dice": {
+                "name": "Würfel",
+                "description": "Würfelt eine zufällige Zahl"
+            },
+
+            "professor": {
+                "name": "Professor",
+                "description": "Versucht die Zahl durch eine Binäre Suche zu bestimmen"
+            }
+        }
     }
 }

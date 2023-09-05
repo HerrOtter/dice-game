@@ -50,6 +50,18 @@
         "items": "Shop Items",
         "points": "Points",
         "cost": "Price",
-        "buy": "Buy"
+        "buy": "Buy",
+
+        "item": {
+            "dice": {
+                "name": "Dice",
+                "description": "Rolls a random number"
+            },
+
+            "professor": {
+                "name": "Professor",
+                "description": "Tries to guess the number via binary search"
+            }
+        }
     }
 }

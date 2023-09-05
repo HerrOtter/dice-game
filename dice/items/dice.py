@@ -1,6 +1,8 @@
+from flask import url_for
+
 from .base import BaseItem
 
 class dice(BaseItem):
-    name = "Dice"
-    description = "Use a dice to randomly guess for you"
     price = 100
+    asset_small = "footage/dice_150x150.webp"
+    asset_big = "footage/dice_600x400.webp"

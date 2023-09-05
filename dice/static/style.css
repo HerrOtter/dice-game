@@ -267,7 +267,7 @@ input {
     align-items: center;
 }
 
-#item_nav .item_list {
+#item_nav #item_list {
     list-style-type: none;
     padding: 0;
 }
@@ -334,7 +334,7 @@ input {
     margin-top: 20px;
 }
 
-#item_show .buy-button {
+#item_show #buy-button {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -354,7 +354,7 @@ input {
     margin-top: 20px;
 }
 
-.buy-button {
+#buy-button {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -365,8 +365,12 @@ input {
     font-size: 16px;
 }
 
-.buy-button:hover {
+#buy-button:hover {
     background-color: #0056b3;
+}
+
+#buy-button:disabled {
+    background-color: gray;
 }
 
 /* Ranglist Setting */

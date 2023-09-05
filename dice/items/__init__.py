@@ -10,6 +10,8 @@ from os.path import dirname, join
 import glob
 from importlib import import_module
 
+from flask_login import current_user
+
 from .base import BaseItem
 __ITEMS__ = {}
 
@@ -30,7 +32,7 @@ def import_items() -> int:
             continue
 
         if cls.__name__ in __ITEMS__:
-            raise Exception(f"Item {cls.name} has a duplicate entry")
+            raise Exception(f"Item {cls.__name__} has a duplicate entry")
 
         __ITEMS__[cls.__name__] = cls()
 
@@ -39,12 +41,16 @@ def import_items() -> int:
 def get_item(name: str) -> Optional[BaseItem]:
     return __ITEMS__.get(name)
 
-def get_items() -> Dict[str, BaseItem]: 
-    return __ITEMS__
+def get_items() -> Dict[str, BaseItem]:
+    all_items = get_all_items()
+    return {k:v for k, v in all_items.items() if v.purchasable(current_user) and not v.has_item(current_user)}
+
+def get_all_items() -> Dict[str, BaseItem]: 
+    return {v[0]: v[1] for v in sorted(__ITEMS__.items(), key=lambda x: x[1].price)}
 
 def items_context_processor():
     return dict(
-        items=get_items(),
+        get_items=get_items,
     )
 
 class item_manager:

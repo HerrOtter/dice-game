@@ -24,7 +24,7 @@
             var reload = false;
             const lang_value = document.getElementById("language-selector").value
 
-            if (lang_value)
+            if (lang_value && lang_value != "{{ current_lang }}")
             {
                 const url = "{{ url_for('api.auth.api_lang') }}"
                 const formData = new FormData();

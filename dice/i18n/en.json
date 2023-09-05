@@ -1,1 +1,55 @@
-{}
+{
+    "guessing_game": "Guessing Game",
+    "close": "Close",
+
+    "auth": {
+        "username": "Username",
+        "password": "Password",
+
+        "login": "Login",
+        "register": "Registrieren",
+
+        "no_user_found": "Es gibt keinen Nutzer mit diesem Namen"
+    },
+
+    "navbar": {
+        "admin": "Admin",
+        "leaderboard": "Leaderboard",
+        "shop": "Shop",
+        "settings": "Settings",
+        "back_game": "Back to the game",
+
+        "logout": "Logout"
+    },
+
+    "game": {
+        "tries": "Tries",
+        "points": "Points",
+        "guess_number": "Guess a number",
+        "guess": "Guess"
+    },
+
+    "leaderboard": {
+        "ranking": "Ranking",
+        "your_position": "Your position"
+    },
+
+    "settings": {
+        "screen_reader": "Screen reader",
+        "font_size": "Font Size",
+
+        "language": {
+            "choose": "Choose a language",
+
+            "de": "german",
+            "en": "english"
+        }
+    },
+
+    "shop": {
+        "items": "Shop Items",
+        "points": "Points",
+        "cost": "Price",
+        "buy": "Buy"
+    }
+}

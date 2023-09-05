@@ -30,7 +30,8 @@
     },
 
     "leaderboard": {
-        "ranking": "Ranking"
+        "ranking": "Ranking",
+        "your_position": "Deine Position"
     },
 
     "settings": {

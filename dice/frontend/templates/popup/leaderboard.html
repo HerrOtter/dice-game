@@ -3,8 +3,9 @@
     data-popup-open-callback="leaderboard_open"
 >
     <div class="container" id="leaderboard">
-    <h1>{{ t("leaderboard.ranking") }}</h1>
-    <div class="ribbon"></div>
+        <h1>{{ t("leaderboard.ranking") }}</h1>
+        <h3>{{ t("leaderboard.your_position") }}: #<a id="current_pos">?</a></h3>
+        <div class="ribbon"></div>
         <table id="leaderboard-table">
             <tr>
                 <td class="number">1</td>
@@ -48,7 +49,9 @@ async function leaderboard_open()
 
     const data = await response.json()
 
-    console.log(data);
+    const current_pos_element = document.getElementById("current_pos");
+    current_pos_element.innerHTML = data.current_position;
+
     for (var i = 0; i < leaderboard_body.children.length; i++)
     {
         const entry_data = data.scoreboard[i];

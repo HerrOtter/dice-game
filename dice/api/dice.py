@@ -132,6 +132,7 @@ def api_dice_scoreboard():
         if not user:
             scoreboard.append(None)
             continue
+
         scoreboard.append({
             "username": user.username,
             "points": user.collected_points

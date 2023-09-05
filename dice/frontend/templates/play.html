@@ -91,7 +91,7 @@
                 }
                 else
                 {
-                    if ("error" in data && data["error"] != "invalid_guess")
+                    if (!("error" in data) || data["error"] != "invalid_guess")
                     {
                         ++attempt_count;
                     }

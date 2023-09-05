@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='popup.js') }}"></script>
     <title>{{ t("guessing_game") }} {% if self.title() %}- {% block title %}{% endblock %}{% endif %}</title>
+
+
+    <meta property="theme-color" content="#007bff">
+    <meta property="og:title" content="!dice">
+    <meta property="og:description" content="Ratespiel">
+    <meta name="description" content="Ratespiel">
+    <meta property="og:url" content="https://dice.jandroegehoff.de">
+    <meta property="og:type" content="website">
+    <meta property="google" content="notranslate">
 </head>
 <body>
 

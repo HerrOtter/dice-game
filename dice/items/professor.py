@@ -4,6 +4,11 @@ from math import ceil, floor
 from .base import BaseItem
 from ..models import Game
 
+# TODO
+# currently the professor by simply adding / substracting
+# half the difference between the last guess and the value.
+# To correctly implement this we need a guess history
+
 class professor(BaseItem):
     price = 1000
     asset_small = "footage/professor_150x150.webp"

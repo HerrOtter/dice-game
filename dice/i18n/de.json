@@ -37,6 +37,7 @@
     "settings": {
         "screen_reader": "Bildschirmleser",
         "font_size": "Schriftgröße",
+        "language_option": "Sprache",
 
         "language": {
             "choose": "Wähle eine Sprache",
@@ -60,7 +61,7 @@
 
             "professor": {
                 "name": "Professor",
-                "description": "Versucht die Zahl durch eine Binäre Suche zu bestimmen"
+                "description": "Versucht die Zahl durch Statistik zu bestimmen"
             }
         }
     }

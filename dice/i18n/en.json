@@ -37,6 +37,7 @@
     "settings": {
         "screen_reader": "Screen reader",
         "font_size": "Font Size",
+        "language_option": "Language",
 
         "language": {
             "choose": "Choose a language",
@@ -60,7 +61,7 @@
 
             "professor": {
                 "name": "Professor",
-                "description": "Tries to guess the number via binary search"
+                "description": "Tries to guess the number through statistics"
             }
         }
     }

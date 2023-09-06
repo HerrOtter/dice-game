@@ -21,6 +21,7 @@
             <ul id="item_list">
                 {% for name, item in get_items().items() %}
                     <li class="item"
+                        data-item="{{ name }}"
                         data-name="{{ item.get_name() }}"
                         data-description="{{ item.get_description() }}"
                         data-price="{{ item.price }}"
@@ -43,7 +44,7 @@
             <div>
                 <p><a id="item_description"></a></p>
                 <p>{{ t("shop.cost") }}: <a id="item_price">?</a></p>
-                <button id="buy-button" disabled>{{ t("shop.buy") }}</button>
+                <button id="buy-button">{{ t("shop.buy") }}</button>
             </div>
         </section>
     </div>
@@ -52,6 +53,8 @@
     <script>
         const itemNav = document.getElementById("item_nav");
         const itemShow = document.getElementById("item_show");
+        const buyButton = document.getElementById("buy-button");
+        buyButton.disabled = true;
 
         function displayItem (selectedItem) {
             if (selectedItem.classList.contains("item")) {
@@ -64,7 +67,6 @@
                 const itemFrame = itemShow.querySelector("#item_frame");
                 const itemDescriptionElem = itemShow.querySelector("#item_description");
                 const itemPriceElem = itemShow.querySelector("#item_price");
-                const buyButton = itemShow.querySelector("#buy-button");
 
                 itemHeader.querySelector("h2").textContent = itemName;
                 itemFrame.src = itemImage;

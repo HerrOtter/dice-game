@@ -90,11 +90,8 @@ class DiceView(AuthModelView):
     create_modal = True
     edit_modal = True
 
-class GameView(DiceView):
-    can_edit = False
-
 admin = Admin(name="!dice", index_view=AuthIndexView(), template_mode="bootstrap4")
 
 admin.add_view(DiceView(User, db.session))
-admin.add_view(GameView(Game, db.session))
+admin.add_view(DiceView(Game, db.session))
 admin.add_view(SetupView(name="Setup", endpoint="setup"))

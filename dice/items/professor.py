@@ -3,6 +3,7 @@ from math import ceil, floor
 from flask import url_for
 
 from .base import BaseItem
+from ..models import Game
 
 class professor(BaseItem):
     price = 1000
@@ -10,6 +11,9 @@ class professor(BaseItem):
     asset_big = "footage/professor_600x400.webp"
 
     def use_item(self, game):
+        if not game or not game.last_guess:
+            return floor((Game.MAX_VALUE - Game.MIN_VALUE) / 2)
+
         guess_offset = (game.value - game.last_guess) / 2
         if guess_offset < 0:
             guess_offset = floor(guess_offset)

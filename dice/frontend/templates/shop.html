@@ -25,7 +25,8 @@
                         data-name="{{ item.get_name() }}"
                         data-description="{{ item.get_description() }}"
                         data-price="{{ item.price }}"
-                        data-image="{{ url_for('static', filename=item.asset_big) }}" data-description="{{ item.description }}"
+                        data-image="{{ url_for('static', filename=item.asset_big) }}"
+                        data-buy-url="{{ url_for('api.shop.api_shop_buy', id_name=name) }}"
                     >
                         <img src="{{ url_for('static', filename=item.asset_small) }}" alt="{{ item.name }}">
                         <span>{{ item.get_name() }}</span>
@@ -93,14 +94,11 @@
             }
         }
 
-        const buy_url_prefix = "{{ url_for('api.shop.api_shop_buy', id_name='') }}"
         function buyItem(selectedItem) {
             if (!selectedItem)
                 return;
 
-            const buy_url = `${buy_url_prefix}${selectedItem.dataset.item}`
-
-            fetch(buy_url, {method: "POST"})
+            fetch(selectedItem.dataset.buyUrl, {method: "POST"})
                 .then(response => response.json())
                 .then(data => window.location.reload());
         }

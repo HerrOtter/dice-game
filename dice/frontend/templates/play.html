@@ -112,12 +112,36 @@
                 <div class="item"
                     data-item="{{ name }}"
                     data-name="{{ item.get_name() }}"
+                    data-use-url="{{ url_for('api.dice.use_item', id_name=item_name) }}"
                 >
                     <img src="{{ url_for('static', filename=item.asset_small) }}" alt="{{ item.name }}">
                     <span>{{ item.get_name() }}</span>
                 </div>
             {% endfor %}
         </div>
+        <script>
+            function useItem(selectedItem) {
+                if (!selectedItem)
+                    return;
+
+                if (!selectedItem.classList.contains("item"))
+                    selectedItem = selectedItem.parentElement;
+
+                if (selectedItem.classList.contains("item")) {
+                    fetch(selectedItem.dataset.useUrl, {method: "POST"})
+                        .then(response => response.json())
+                        .then(data => {
+                            dice_form.guess.value = data.value
+                            dice_form.submit.click()
+                        });
+                }
+            }
+
+            const itemNav = document.getElementById("h_item_nav");
+            itemNav.addEventListener("click", (event) => {
+                useItem(event.target);
+            });
+        </script>
     {% endif %}
 
     <footer>

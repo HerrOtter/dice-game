@@ -147,11 +147,6 @@ def api_dice_scoreboard():
 @dice.route("/use/<id_name>", methods=["POST"])
 @login_required
 def use_item(id_name: str):
-    if not current_game:
-        return {
-            "error": "no_active_game"
-        }, 400
-
     if not id_name in current_user.get_items():
         return {
             "error": "invalid_item"
@@ -160,7 +155,7 @@ def use_item(id_name: str):
     item = get_item(id_name)
 
     guess = item.use_item(current_game)
-    if not guess:
+    if guess is None:
         return {
             "error": "not_usable"
         }, 400

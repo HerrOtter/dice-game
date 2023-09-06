@@ -1,7 +1,7 @@
 """
 Frontend submodule
 
-freestanding flask frontend
+Contains all the logic for the frontend to function
 """
 
 from flask import Blueprint

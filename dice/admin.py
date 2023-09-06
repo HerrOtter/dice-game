@@ -4,7 +4,7 @@ from flask_admin.contrib.sqla import ModelView
 from sqlalchemy.exc import IntegrityError
 
 from .models import db, User, Game
-from .utils import is_admin
+from .auth import is_admin
 
 # Models
 class SetupTable(db.Model):

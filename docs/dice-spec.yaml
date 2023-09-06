@@ -4,85 +4,215 @@ info:
   title: Dice Game
   license:
     name: MIT
-    
+
 paths:
-   # auth
-   /api/auth/login:
-     post:
-       tags:
+  /api/auth/login:
+    post:
+      tags:
         - auth
-       summary: API login endpoint
-       responses:
-         "200":
-           description: "Successful login"
-         "400":
-           description: "Login failed"
-           
-           
-   /api/auth/register:
-     post:
-       tags:
+      summary: API login endpoint
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/register:
+    post:
+      tags:
         - auth
-       summary: API registration endpoint
-       responses:
-         "200":
-           description: "Successful registration"
-         "400":
-           description: "Registration failed"
-           
-   /api/auth/logout:
-     post:
-       tags:
+      summary: API registration endpoint
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Successful registration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User is already logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/logout:
+    post:
+      tags:
         - auth
-       summary: API logout endpoint
-       responses:
-         "200":
-           description: "Logout successful or not logged in"
-           
-   # user
-   /api/auth/user:
-     get:
-       tags:
-         - user
-       summary: Get info about the current user
-       responses:
-         "200":
-           description: "Return current user info"
-         "401":
-           description: "Not authenticated"
+      summary: API logout endpoint
+      responses:
+        '200':
+          description: Logout successful or not logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+    get:
+      tags:
+        - auth
+      summary: API logout endpoint
+      responses:
+        '200':
+          description: Logout successful or not logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
 
-       
-   # game
-   /api/dice/guess:
-     post:
-       tags:
-         - game
-       summary: Guess the number for the current game and receive feedback
-       responses:
-         "200":
-           description: "Successful registration"
-         "401":
-           description: "Not authenticated"
+  /api/auth/user:
+    get:
+      tags:
+        - auth
+      summary: Get info about the current user
+      responses:
+        '200':
+          description: Return current user info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  points:
+                    type: integer
+                  lang:
+                    type: string
+                  inventory:
+                    type: array
+                    items:
+                      type: string
+        '401':
+          description: Not authenticated
 
-   /api/dice/info:
-     get:
-       tags:
-         - game
-       summary: Get basic infos about previous games
-       responses:
-         "200":
-           description: "Game list returned"
-         "404":
-           description: "Game was not found or is inaccessible"
-         "401":
-           description: "Not authenticated"
+  /api/auth/change_language:
+    post:
+      tags:
+        - auth
+      summary: Change the language for the current user
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+              required:
+                - language
+      responses:
+        '200':
+          description: Language was changed
+        '400':
+          description: No language was specified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 
-   /api/dice/info/{gameId}:
-     get:
-       tags:
-         - game
-       summary: Get info about a previous game
-       parameters:
+  /api/dice/guess:
+    post:
+      tags:
+        - dice
+      summary: Guess the number for the current game and receive feedback
+      responses:
+        '200':
+          description: Successful registration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+
+  /api/dice/info:
+    get:
+      tags:
+        - dice
+      summary: Get basic infos about previous games
+      responses:
+        '200':
+          description: Game list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Game was not found or is inaccessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/dice/info/{gameId}:
+    get:
+      tags:
+        - dice
+      summary: Get info about a previous game
+      parameters:
         - name: gameId
           in: path
           description: ID of the game
@@ -90,71 +220,176 @@ paths:
           schema:
             type: integer
             format: int64
-       responses:
-         "200":
-           description: "Game info returned"
-         "404":
-           description: "Game was not found or is inaccessible"
-         "401":
-           description: "Not authenticated"
+      responses:
+        '200':
+          description: Game info returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Game was not found or is inaccessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
-   /api/dice/scoreboard:
-     get:
-       tags:
-         - game
-       summary: "Get global scoreboard"
-       responses:
-         "200":
-           description: "Global scoreboard was returned"
+  /api/dice/info/current:
+    get:
+      tags:
+        - dice
+      summary: Get info about the current game
+      responses:
+        '200':
+          description: Game info returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Game was not found or is inaccessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
-   # shop
-   /api/shop/list:
-     get:
-       tags:
-         - shop
-       summary: List all items in the shop with basic infos
-       responses:
-         "200":
-           description: "Item list returned"
-         "401":
-           description: "Not authenticated"
-           
-   /api/shop/list/{itemId}:
-     get:
-       tags:
-         - shop
-       summary: List Information about a specific item
-       parameters:
-        - name: itemId
+  /api/dice/scoreboard:
+    get:
+      tags:
+        - dice
+      summary: Get global scoreboard
+      responses:
+        '200':
+          description: Global scoreboard was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scoreboard'
+
+  /api/shop/list:
+    get:
+      tags:
+        - shop
+      summary: List all items in the shop with basic infos
+      responses:
+        '200':
+          description: Item list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        '401':
+          description: Not authenticated
+
+  /api/shop/list/{id_name}:
+    get:
+      tags:
+        - shop
+      summary: List Information about a specific item
+      parameters:
+        - name: id_name
           in: path
           description: ID of an item
           required: true
           schema:
-            type: integer
-            format: int64
-       responses:
-         "200":
-           description: "Item info returned"
-         "401":
-           description: "Not authenticated"
+            type: string
+      responses:
+        '200':
+          description: Item info returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Item not found
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Error'
 
-   /api/shop/buy/{itemId}:
-     post:
-       tags:
-         - shop
-       summary: Attempt to buy an item
-       parameters:
-        - name: itemId
+  '/api/shop/buy/{id_name}':
+    post:
+      tags:
+        - shop
+      summary: Attempt to buy an item
+      parameters:
+        - name: id_name
           in: path
           description: ID of an item
           required: true
           schema:
-            type: integer
-            format: int64
-       responses:
-         "200":
-           description: "Item bought"
-         "403":
-           description: "Item could not be bought"
-         "401":
-           description: "Not authenticated"
+            type: string
+      responses:
+        '200':
+          description: Item bought
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          description: Not authenticated
+        '400':
+          description: Item could not be bought
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Item not found
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Status:
+      properties:
+        status:
+          type: string
+    Error:
+      properties:
+        error:
+          type: string
+    Game:
+      properties:
+        id:
+          type: integer
+        guesses:
+          type: integer
+        value:
+          nullable: true
+          type: integer
+
+    Scoreboard:
+      properties:
+        current_position:
+          type: integer
+        scoreboard:
+          type: array
+          items:
+            type: object
+            properties:
+              username:
+                type: string
+              points:
+                type: integer
+    
+    Item:
+      properties:
+        id_name:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer

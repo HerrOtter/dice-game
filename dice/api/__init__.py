@@ -1,7 +1,9 @@
 """
 API submodules
 
-This module includes all relevant code for the REST API to function
+This module includes all relevant code for the REST API
+
+Reference the openapi specification for routes
 """
 
 from flask import Blueprint

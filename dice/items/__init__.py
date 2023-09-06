@@ -1,7 +1,7 @@
 """
 Items submodule
 
-Defines all items and helper methods to load and query those
+Defines all items and a manager to integrate into flask
 """
 
 from typing import Dict, Optional

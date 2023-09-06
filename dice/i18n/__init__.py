@@ -1,3 +1,8 @@
+"""
+i18n submodule
+
+Basic i18n submodule that recursively looks up translations via keys
+"""
 import glob
 from pathlib import Path
 from os.path import dirname, join

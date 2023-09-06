@@ -1,4 +1,4 @@
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from .models import db, User
 
 login_manager = LoginManager()
@@ -12,3 +12,10 @@ def load_user(user_id):
     if not users:
         return None
     return users[0]
+
+# This cannot be merged into the User model because of anonymous users
+def is_admin() -> bool:
+    if not current_user.is_authenticated:
+        return False
+
+    return current_user.admin

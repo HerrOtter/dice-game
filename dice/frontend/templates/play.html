@@ -29,7 +29,7 @@
         <p>{{ t("game.points") }}: <a id="points">{{ current_user.points or 0 }}</a></p>
 
         <p id="status"></p>
-        <form id="dice-form" action="{{ url_for('api.dice.api_dice_guess') }}" method="post">
+        <form id="dice-form" action="{{ url_for('api.dice.guess') }}" method="post">
             <input
                 type="number"
                 min="0"
@@ -42,8 +42,8 @@
         </form>
         <script>
             var attempt_count = {{ current_game.guesses or 0 }};
-            const current_game_url = "{{ url_for('api.dice.api_dice_info', current_game=True) }}"
-            const user_url = "{{ url_for('api.auth.api_user') }}"
+            const current_game_url = "{{ url_for('api.dice.info', current_game=True) }}"
+            const user_url = "{{ url_for('api.auth.user') }}"
 
             const attempt_element = document.getElementById("attempts");
             const point_element = document.getElementById("points");
@@ -153,7 +153,7 @@
             {{ t("navbar.logout") }}
         </button>
         <script type="text/javascript">
-            const logout_url = "{{ url_for('api.auth.api_logout') }}";
+            const logout_url = "{{ url_for('api.auth.logout') }}";
             function logout()
             {
                 fetch(logout_url, {method: "POST"})

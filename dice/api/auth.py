@@ -8,7 +8,7 @@ from ..i18n import set_current_lang, get_current_lang
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 @auth.route("/login", methods=["POST"])
-def api_login():
+def login():
     if current_user.is_authenticated:
         # We are already authenticated, what are we doing?
         return {
@@ -61,7 +61,7 @@ def api_login():
 
 
 @auth.route("/register", methods=["POST"])
-def api_register():
+def register():
     if current_user.is_authenticated:
         # We are logged in, why register again?
         return {
@@ -101,7 +101,7 @@ def api_register():
     }
 
 @auth.route("/logout", methods=["GET", "POST"])
-def api_logout():
+def logout():
     logout_user()
     return {
         "status": "logout_success"
@@ -109,7 +109,7 @@ def api_logout():
 
 @auth.route("/user", methods=["GET"])
 @login_required
-def api_user():
+def user():
     inventory = []
     for item in current_user.get_items():
         inventory.append(item)
@@ -123,7 +123,7 @@ def api_user():
 
 @auth.route("/change_language", methods=["POST"])
 @login_required
-def api_lang():
+def change_language():
     try:
         language = request.form["language"]
     except KeyError:

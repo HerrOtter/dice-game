@@ -42,7 +42,7 @@
 
             if (lang_value && lang_value != languageSelector.dataset.lastValue)
             {
-                const url = "{{ url_for('api.auth.api_lang') }}"
+                const url = "{{ url_for('api.auth.change_language') }}"
                 const formData = new FormData();
                 formData.append("language", lang_value)
 

@@ -12,7 +12,7 @@ dice = Blueprint("dice", __name__, url_prefix="/dice")
 
 @dice.route("/guess", methods=["POST"])
 @login_required
-def api_dice_guess():
+def guess():
     active_game = current_game
     if not active_game:
         active_game = new_game()
@@ -65,7 +65,7 @@ def api_dice_guess():
 @dice.route("/info/<int:game_id>", methods=["GET"])
 @dice.route("/info/current", defaults={"current_game": True}, methods=["GET"])
 @login_required
-def api_dice_info(game_id: Optional[int] = None, current_game: bool = False):
+def info(game_id: Optional[int] = None, current_game: bool = False):
     games = []
     if current_game:
         game_list = [current_game]
@@ -108,7 +108,7 @@ def api_dice_info(game_id: Optional[int] = None, current_game: bool = False):
     return games
 
 @dice.route("/scoreboard", methods=["GET"])
-def api_dice_scoreboard():
+def scoreboard():
 
     players = db.session.execute(
             db.select(User).order_by(desc(User.collected_points))

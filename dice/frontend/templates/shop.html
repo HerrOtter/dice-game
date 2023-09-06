@@ -26,7 +26,7 @@
                         data-description="{{ item.get_description() }}"
                         data-price="{{ item.price }}"
                         data-image="{{ url_for('static', filename=item.asset_big) }}"
-                        data-buy-url="{{ url_for('api.shop.api_shop_buy', id_name=name) }}"
+                        data-buy-url="{{ url_for('api.shop.buy', id_name=name) }}"
                     >
                         <img src="{{ url_for('static', filename=item.asset_small) }}" alt="{{ item.name }}">
                         <span>{{ item.get_name() }}</span>

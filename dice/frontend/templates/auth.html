@@ -8,7 +8,7 @@
 
     <div class="container">
         <h1>{{ t("guessing_game") }}</h1>
-        <form id="login-form" action="{{ url_for('api.auth.api_login') }}" method="post">
+        <form id="login-form" action="{{ url_for('api.auth.login') }}" method="post">
             <label for="player_name">{{ t("auth.username") }}:</label>
             <input type="text" id="username" name="username" placeholder="{{ t('auth.username') }}" required>
             <label for="password">{{ t("auth.password") }}</label>
@@ -58,7 +58,7 @@
             function send_form_register()
             {
                 //ClosePopup();
-                login_form.action = "{{ url_for('api.auth.api_register') }}";
+                login_form.action = "{{ url_for('api.auth.register') }}";
                 login_form.requestSubmit();
             }
         </script>

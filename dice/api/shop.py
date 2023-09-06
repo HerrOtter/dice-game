@@ -10,7 +10,7 @@ shop = Blueprint("shop", __name__, url_prefix="/shop")
 @shop.route("/list", methods=["GET"])
 @shop.route("/list/<id_name>", methods=["GET"])
 @login_required
-def api_shop_list(id_name: Optional[str] = None):
+def list_items(id_name: Optional[str] = None):
     if id_name:
         item = get_item(id_name)
         if not item:
@@ -43,7 +43,7 @@ def api_shop_list(id_name: Optional[str] = None):
 
 @shop.route("/buy/<id_name>", methods=["POST"])
 @login_required
-def api_shop_buy(id_name: str):
+def buy(id_name: str):
     item = get_item(id_name)
     if not item:
         return {

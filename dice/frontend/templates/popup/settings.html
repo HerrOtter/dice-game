@@ -10,7 +10,7 @@
         </label>
 
         <p>{{ t("settings.language_option") }}:</p>
-        <select id="language-selector" value="{{ current_lang }}">
+        <select id="language-selector" value="{{ current_lang }}" data-last-value="{{ current_lang }}">
             <option value="">{{ t("settings.language.choose") }}</option>
             <option value="de">{{ t("settings.language.de") }} (Deutsch)</option>
             <option value="en">{{ t("settings.language.en") }} (english)</option>
@@ -20,12 +20,13 @@
         <input type="range" id="fontSizeSlider" min="10" max="50" step="1" value="16">
     </div>
     <script>
+        const languageSelector = document.getElementById("language-selector");
         async function settings_close_callback()
         {
             var reload = false;
-            const lang_value = document.getElementById("language-selector").value
+            const lang_value = languageSelector.value
 
-            if (lang_value && lang_value != "{{ current_lang }}")
+            if (lang_value && lang_value != languageSelector.dataset.lastValue)
             {
                 const url = "{{ url_for('api.auth.api_lang') }}"
                 const formData = new FormData();

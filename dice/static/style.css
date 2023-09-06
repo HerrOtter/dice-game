@@ -81,6 +81,14 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Select Settings */
+select {
+    padding: 6px;
+    background-color: #dcdcdc;
+    border: none;
+    border-radius: 5px;
+}
+
 /* Button Settings */
 button {
     padding: 10px 20px;
@@ -404,7 +412,7 @@ input {
 }
 
 #buy-button:disabled {
-    background-color: gray;
+    background-color: #dcdcdc;
 }
 
 /* Ranglist Setting */

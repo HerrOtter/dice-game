@@ -102,7 +102,9 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     guesses = db.Column(db.Integer, default=0, nullable=False)
     value = db.Column(db.Integer, nullable=False)
+    last_guess = db.Column(db.Integer, nullable=True)
     complete = db.Column(db.Boolean, default=False, nullable=False)
+
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)
@@ -133,6 +135,8 @@ class Game(db.Model):
             return -1
         elif guess > self.MAX_VALUE:
             return 1
+
+        self.last_guess = guess
 
         self.guesses += 1
         if self.value == guess:

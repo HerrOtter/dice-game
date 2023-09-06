@@ -30,7 +30,7 @@ header {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 footer {
@@ -291,6 +291,40 @@ input {
 }
 
 #item_nav .item:hover {
+    background-color: #f0f0f0;
+}
+
+#h_item_nav {
+    max-height: 90vh;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#h_item_nav #item_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#h_item_nav .item {
+    margin: 10px;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+    width: 90px;
+}
+
+#h_item_nav .item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+#h_item_nav .item:hover {
     background-color: #f0f0f0;
 }
 

@@ -59,7 +59,13 @@
         var last_item = null;
 
         function displayItem (selectedItem) {
-            if (selectedItem && selectedItem.classList.contains("item")) {
+            if (!selectedItem)
+                return;
+
+            if (!selectedItem.classList.contains("item"))
+                selectedItem = selectedItem.parentElement;
+
+            if (selectedItem.classList.contains("item")) {
                 last_item = selectedItem;
                 const itemName = selectedItem.dataset.name;
                 const itemImage = selectedItem.dataset.image;

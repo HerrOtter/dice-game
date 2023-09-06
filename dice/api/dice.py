@@ -6,6 +6,7 @@ from sqlalchemy import desc
 
 from ..models import db, User, Game
 from ..game import current_game, new_game
+from ..items import get_item
 
 dice = Blueprint("dice", __name__, url_prefix="/dice")
 
@@ -143,3 +144,27 @@ def api_dice_scoreboard():
         "scoreboard": scoreboard
     }
 
+@dice.route("/use/<id_name>", methods=["POST"])
+@login_required
+def use_item(id_name: str):
+    if not current_game:
+        return {
+            "error": "no_active_game"
+        }, 400
+
+    if not id_name in current_user.get_items():
+        return {
+            "error": "invalid_item"
+        }, 400
+
+    item = get_item(id_name)
+
+    guess = item.use_item(current_game)
+    if not guess:
+        return {
+            "error": "not_usable"
+        }, 400
+
+    return {
+        "value": guess
+    }

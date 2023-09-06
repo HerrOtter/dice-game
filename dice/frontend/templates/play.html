@@ -9,7 +9,7 @@
             <button class="nav-button" id="admin-button">{{ t("navbar.admin") }}</button>
             <script>
                 document.getElementById("admin-button").addEventListener("click", () => {
-                    window.location.href = "/admin"
+                    window.location.href = "{{ url_for('admin.index') }}"
                 })
             </script>
         {% endif %}
@@ -104,6 +104,21 @@
             });
         </script>
     </div>
+
+    {% if current_user.items %}
+        <div class="container" id="h_item_nav">
+            {% for item_name in current_user.get_items() %}
+                {% set item = get_item(item_name) %}
+                <div class="item"
+                    data-item="{{ name }}"
+                    data-name="{{ item.get_name() }}"
+                >
+                    <img src="{{ url_for('static', filename=item.asset_small) }}" alt="{{ item.name }}">
+                    <span>{{ item.get_name() }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <footer>
         <button

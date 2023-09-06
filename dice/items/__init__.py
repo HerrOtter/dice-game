@@ -50,6 +50,7 @@ def get_all_items() -> Dict[str, BaseItem]:
 
 def items_context_processor():
     return dict(
+        get_item=get_item,
         get_items=get_items,
     )
 

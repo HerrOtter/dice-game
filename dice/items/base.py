@@ -4,7 +4,7 @@ from typing import List, Optional
 from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
-from ..models import db, User, UserItems
+from ..models import db, User, Game, UserItems
 from ..i18n import translate
 
 class BaseItem(ABC):
@@ -17,6 +17,9 @@ class BaseItem(ABC):
 
     def __init__(self):
         self.requires = []
+
+    def use_item(self, game: Game) -> Optional[int]:
+        return None
 
     def has_item(self, user: User) -> bool:
         item_name = self.__class__.__name__

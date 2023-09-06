@@ -30,8 +30,8 @@ def api_shop_list(id_name: Optional[str] = None):
              not item.has_item(current_user))):
             buyable_items.append({
                 "id_name": name,
-                "name": item.name,
-                "description": item.description,
+                "name": item.get_name(),
+                "description": item.get_description(),
                 "price": item.price,
             })
 

@@ -56,8 +56,11 @@
         const buyButton = document.getElementById("buy-button");
         buyButton.disabled = true;
 
+        var last_item = null;
+
         function displayItem (selectedItem) {
-            if (selectedItem.classList.contains("item")) {
+            if (selectedItem && selectedItem.classList.contains("item")) {
+                last_item = selectedItem;
                 const itemName = selectedItem.dataset.name;
                 const itemImage = selectedItem.dataset.image;
                 const itemDescription = selectedItem.dataset.description;
@@ -84,6 +87,18 @@
             }
         }
 
+        const buy_url_prefix = "{{ url_for('api.shop.api_shop_buy', id_name='') }}"
+        function buyItem(selectedItem) {
+            if (!selectedItem)
+                return;
+
+            const buy_url = `${buy_url_prefix}${selectedItem.dataset.item}`
+
+            fetch(buy_url, {method: "POST"})
+                .then(response => response.json())
+                .then(data => window.location.reload());
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             itemNav.addEventListener("click", (event) => {
                 displayItem(event.target);
@@ -91,5 +106,9 @@
 
             displayFirstItem();
         });
+
+        buyButton.addEventListener("click", () => {
+            buyItem(last_item);
+        })
     </script>
 {% endblock %}

@@ -115,7 +115,7 @@
         </button>
         <script type="text/javascript">
             const logout_url = "{{ url_for('api.auth.api_logout') }}";
-            async function logout()
+            function logout()
             {
                 fetch(logout_url, {method: "POST"})
                     .then(() => window.location.reload());

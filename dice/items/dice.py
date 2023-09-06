@@ -1,6 +1,5 @@
 from random import randint
 
-from flask import url_for
 
 from .base import BaseItem
 from ..models import Game

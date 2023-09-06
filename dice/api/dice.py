@@ -147,7 +147,7 @@ def api_dice_scoreboard():
 @dice.route("/use/<id_name>", methods=["POST"])
 @login_required
 def use_item(id_name: str):
-    if not id_name in current_user.get_items():
+    if id_name not in current_user.get_items():
         return {
             "error": "invalid_item"
         }, 400

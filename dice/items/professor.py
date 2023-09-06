@@ -1,6 +1,5 @@
 from math import ceil, floor
 
-from flask import url_for
 
 from .base import BaseItem
 from ..models import Game

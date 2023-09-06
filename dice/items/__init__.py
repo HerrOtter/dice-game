@@ -43,10 +43,17 @@ def get_item(name: str) -> Optional[BaseItem]:
 
 def get_items() -> Dict[str, BaseItem]:
     all_items = get_all_items()
-    return {k:v for k, v in all_items.items() if v.purchasable(current_user) and not v.has_item(current_user)}
+    return {
+        k: v
+        for k, v in all_items.items()
+        if v.purchasable(current_user) and not v.has_item(current_user)
+    }
 
 def get_all_items() -> Dict[str, BaseItem]: 
-    return {v[0]: v[1] for v in sorted(__ITEMS__.items(), key=lambda x: x[1].price)}
+    return {
+        v[0]: v[1]
+        for v in sorted(__ITEMS__.items(), key=lambda x: x[1].price)
+    }
 
 def items_context_processor():
     return dict(

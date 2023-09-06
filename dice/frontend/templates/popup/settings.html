@@ -17,10 +17,24 @@
         </select>
 
         <p>{{ t("settings.font_size") }}:</p>
-        <input type="range" id="fontSizeSlider" min="10" max="50" step="1" value="16">
+        <input
+            type="range"
+            id="fontSizeSlider"
+            min="10"
+            max="50"
+            step="1"
+            value="16"
+        >
+        <button
+            onclick="fontSizeSlider.value = 16; updateFontSize(`${fontSizeSlider.value}px`)"
+        >
+            Reset
+        </button>
     </div>
     <script>
         const languageSelector = document.getElementById("language-selector");
+        const fontSizeSlider = document.getElementById("fontSizeSlider");
+
         async function settings_close_callback()
         {
             var reload = false;
@@ -40,10 +54,28 @@
                 reload = true;
             }
 
+            localStorage["font-size"] = `${fontSizeSlider.value}px`
+            updateFontSize();
+
             if (reload)
             {
                 window.location.reload();
             }
         }
+
+        fontSizeSlider.addEventListener("input", (event) => {
+          updateFontSize(`${event.target.value}px`);
+        });
+
+        function updateFontSize(aFontSize)
+        {        
+            const fontSize = aFontSize || localStorage["font-size"];
+            if (fontSize)
+            {
+                document.documentElement.style.setProperty("font-size", fontSize)
+            }
+        }
+        updateFontSize();
+
     </script>
 </div>

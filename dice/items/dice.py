@@ -1,8 +1,8 @@
 from random import randint
 
-
 from .base import BaseItem
 from ..models import Game
+
 class dice(BaseItem):
     price = 100
     asset_small = "footage/dice_150x150.webp"

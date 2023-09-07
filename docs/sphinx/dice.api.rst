@@ -1,9 +1,16 @@
 dice.api package
 ================
 
+Module contents
+---------------
+
+.. automodule:: dice.api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
-
 
 .. automodule:: dice.api.auth
    :members:
@@ -18,14 +25,6 @@ Submodules
 
 
 .. automodule:: dice.api.shop
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: dice.api
    :members:
    :undoc-members:
    :show-inheritance:

@@ -95,7 +95,7 @@ class UserItems(db.Model):
     item_name = db.Column(db.String, primary_key=True)
 
 class Game(db.Model):
-    MIN_VALUE= 0
+    MIN_VALUE = 0
     MAX_VALUE = 100
 
     __tablename__ = "game"
@@ -104,7 +104,6 @@ class Game(db.Model):
     value = db.Column(db.Integer, nullable=False)
     last_guess = db.Column(db.Integer, nullable=True)
     complete = db.Column(db.Boolean, default=False, nullable=False)
-
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)

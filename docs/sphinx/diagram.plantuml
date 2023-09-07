@@ -1,0 +1,103 @@
+class Model
+note left: declarative base from SQLAlchemy
+
+class User {
+    __tablename__ = "user"
+
+    id: int
+    username: str
+    password: str
+    hash_type: int 
+    lang: str
+    
+    collected_points: int
+    points: int
+ 
+    admin: bool
+    
+    games: List[Game]
+    items: List[UserItem]
+
+    str hash_password(password: str)
+    void set_password(password: str, upgrade: bool)
+    bool check_password(password: str)
+    List[str] get_items()
+    int add_points(points: int)
+    int remove_points(points: int)
+}
+
+class UserItem {
+    __tablename__ = "user_items"
+
+    user_id: int
+    user: User
+    item_name: str
+}
+
+class Game {
+    __tablename__ = "game"
+
+    {static} MIN_VALUE = 0
+    {static} MAX_VALUE = 100
+
+    id: int
+    guesses: int = 0
+    value: int
+    last_guess: int
+    complete: bool
+    
+    user_id: int
+    user: User
+    
+    void generate_value()
+    int check_guess(guess: int)
+}
+
+class SetupTable {
+    __tablename__ = "_setup"
+    complete: bool =True
+}
+
+User --|> Model
+UserItem--|> Model
+Game --|> Model
+SetupTable --|> Model
+
+User "1"  o-- "0..*" UserItem
+User "1"  o-- "0..*" Game
+
+abstract class BaseItem {    
+    price: int
+    requires: List[BaseItem]
+    enabled: bool = True
+    
+    asset_big: str
+    asset_small: str
+    
+    int use_item(game: Game)
+ }
+ 
+ class dice {
+     price = 100
+
+     asset_small = "footage/dice_150x150.webp"
+     asset_big = "footage/dice_600x400.webp"
+     
+     int use_item(game: Game)
+ }
+ 
+ class professor {
+     price = 1000
+
+     asset_small = "footage/professor_150x150.webp"
+     asset_big = "footage/professor_600x400.webp"
+
+     int use_item(game: Game)
+ }
+ 
+BaseItem ..|> Game
+BaseItem o-- "0..*"  BaseItem
+dice --|> BaseItem
+professor --|> BaseItem
+
+@enduml

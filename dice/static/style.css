@@ -536,9 +536,12 @@ td {
     z-index: -1;
 }
 
+#buttons {
+    margin-top: 2rem;
+}
 .close {
     width: 30%;
     font-size: larger;
-    margin-top: 1rem;
+    margin-top: 2rem;
     text-align: none;
 }

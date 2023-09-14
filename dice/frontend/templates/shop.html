@@ -62,6 +62,7 @@
         function displayItem (selectedItem) {
             if (!selectedItem)
                 return;
+            buyButton.classList.remove("guess-wrong");
 
             if (!selectedItem.classList.contains("item"))
                 selectedItem = selectedItem.parentElement;
@@ -94,8 +95,13 @@
             }
         }
 
+        const user_points = {{ current_user.points }};
         function buyItem(selectedItem) {
             if (!selectedItem)
+                return;
+
+            if (user_points < selectedItem.dataset.price)
+                buyButton.classList.add("guess-wrong");
                 return;
 
             fetch(selectedItem.dataset.buyUrl, {method: "POST"})

@@ -116,8 +116,8 @@ button:hover {
 }
 
 .guess-wrong, .guess-wrong:hover {
-    background-color: #ff0000;
-}
+    background-color: #ff0000 !important;
+}   
 
 .guess-right, .guess-right:hover {
     background-color: #4bb543;

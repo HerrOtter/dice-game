@@ -46,7 +46,7 @@ def get_items() -> Dict[str, BaseItem]:
     return {
         k: v
         for k, v in all_items.items()
-        if v.purchasable(current_user) and not v.has_item(current_user)
+        if not v.has_item(current_user)
     }
 
 def get_all_items() -> Dict[str, BaseItem]: 

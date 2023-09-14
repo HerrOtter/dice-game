@@ -101,8 +101,10 @@
                 return;
 
             if (user_points < selectedItem.dataset.price)
+            {
                 buyButton.classList.add("guess-wrong");
                 return;
+            }
 
             fetch(selectedItem.dataset.buyUrl, {method: "POST"})
                 .then(response => response.json())

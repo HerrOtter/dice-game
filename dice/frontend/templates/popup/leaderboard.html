@@ -60,7 +60,7 @@ async function leaderboard_open()
 
         const row = leaderboard_body.children[i];
 
-        row.getElementsByClassName("name")[0].innerHTML = entry_data["username"]
+        row.getElementsByClassName("name")[0].innerHTML = entry_data["username"].replace(/</g, "&lt;")
         row.getElementsByClassName("points")[0].innerHTML = entry_data["points"]
     }
 }

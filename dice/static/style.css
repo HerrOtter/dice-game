@@ -275,7 +275,7 @@ input {
 #item_nav {
     flex: 1 1 25%;
     max-height: 90vh;
-    overflow-y: auto;
+    overflow: clip;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -345,6 +345,7 @@ input {
 
 #item_show {
     flex: 1 1 75%;
+    height: 93%;
     max-height: 90vh;
     padding: 20px;
     text-align: center;
@@ -373,6 +374,10 @@ input {
     margin: 26px auto;
 }
 
+#item_show #item_info {
+    margin-bottom: 40px;
+}
+
 #item_show #item_frame img {
     max-width: 100%;
     height: auto;
@@ -385,8 +390,8 @@ input {
 
 #item_show #buy-button {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0;
+    right: 0;
 }
 
 #item_frame {
@@ -434,6 +439,15 @@ input {
 #leaderboard {
     width: 28%;
     position: relative;
+}
+
+@media screen and (max-width: 1000px) {
+    #leaderboard { width: 50%; }
+}
+
+
+@media screen and (max-width: 500px) {
+    #leaderboard { width: 85%; }
 }
 
 table {

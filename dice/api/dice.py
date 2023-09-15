@@ -114,8 +114,6 @@ def scoreboard():
             db.select(User).order_by(desc(User.collected_points))
         ).all()
 
-    print(players)
-
     current_position = None
     if current_user:
         try:
